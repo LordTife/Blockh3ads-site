@@ -1,872 +1,1654 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wiggly World — Anybody Can Be Anybody</title>
-<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --yellow: #FFE135;
-    --pink: #FF6B9D;
-    --blue: #4ECDC4;
-    --orange: #FF8C42;
-    --purple: #A855F7;
-    --green: #6BCB77;
-    --red: #FF4757;
-    --black: #1a1a1a;
-    --white: #FFFEF0;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--purple);
-    font-family: 'Maximum voltage', sans-serif;
-    color: var(--black);
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    width: 24px; height: 24px;
-    background: var(--pink);
-    border-radius: 50%;
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s ease, background 0.2s ease;
-    mix-blend-mode: multiply;
-  }
-  .cursor.big { transform: scale(2.5); background: var(--blue); }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 3rem;
-    background: var(--black);
-  }
-
-  .nav-logo {
-    font-family: 'Boogaloo', cursive;
-    font-size: 2rem;
-    color: var(--yellow);
-    letter-spacing: 1px;
-    text-decoration: none;
-  }
-
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--yellow); }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--yellow);
-    position: relative;
-    overflow: hidden;
-    padding-top: 80px;
-  }
-
-  .hero-bg-circles {
-    position: absolute; inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    animation: blobFloat 6s ease-in-out infinite;
-  }
-  .blob1 { width: 400px; height: 400px; background: var(--pink); opacity: 0.3; top: -100px; right: -100px; animation-delay: 0s; }
-  .blob2 { width: 300px; height: 300px; background: var(--blue); opacity: 0.3; bottom: -80px; left: -80px; animation-delay: 2s; }
-  .blob3 { width: 200px; height: 200px; background: var(--orange); opacity: 0.3; top: 60%; right: 15%; animation-delay: 4s; }
-
-  @keyframes blobFloat {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-30px) scale(1.05); }
-  }
-
-  .hero-content {
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-sausage {
-    font-size: 10rem;
-    display: inline-block;
-    animation: wiggle 1.5s ease-in-out infinite;
-    line-height: 1;
-    margin-bottom: 1rem;
-    filter: drop-shadow(4px 4px 0px var(--black));
-  }
-
-  @keyframes wiggle {
-    0%, 100% { transform: rotate(-8deg) scale(1); }
-    25% { transform: rotate(8deg) scale(1.05); }
-    50% { transform: rotate(-5deg) scale(0.98); }
-    75% { transform: rotate(5deg) scale(1.03); }
-  }
-
-  .hero-title {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(4rem, 12vw, 9rem);
-    line-height: 0.9;
-    color: var(--black);
-    letter-spacing: -2px;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero-title span {
-    color: var(--pink);
-    display: inline-block;
-    animation: colorCycle 3s ease-in-out infinite;
-  }
-
-  @keyframes colorCycle {
-    0%, 100% { color: var(--pink); }
-    33% { color: var(--orange); }
-    66% { color: var(--purple); }
-  }
-
-  .hero-sub {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--black);
-    margin-bottom: 2.5rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    opacity: 0.7;
-  }
-
-  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-  .btn {
-    padding: 1rem 2.5rem;
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.4rem;
-    letter-spacing: 1px;
-    border: 3px solid var(--black);
-    border-radius: 50px;
-    cursor: none;
-    transition: transform 0.1s, box-shadow 0.1s;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 4px 4px 0 var(--black);
-  }
-  .btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 var(--black);
-  }
-  .btn:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--black);
-  }
-  .btn-primary { background: var(--black); color: var(--yellow); }
-  .btn-secondary { background: var(--pink); color: var(--black); }
-
-  /* MARQUEE */
-  .marquee-wrap {
-    background: var(--black);
-    color: var(--yellow);
-    padding: 1rem 0;
-    overflow: hidden;
-    border-top: 3px solid var(--black);
-    border-bottom: 3px solid var(--black);
-  }
-
-  .marquee-track {
-    display: flex;
-    gap: 0;
-    animation: scroll 20s linear infinite;
-    width: max-content;
-  }
-
-  .marquee-item {
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-    white-space: nowrap;
-    padding: 0 3rem;
-  }
-
-  .marquee-item .dot { color: var(--pink); margin: 0 0.5rem; }
-
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ABOUT */
-  .about {
-    background: var(--white);
-    padding: 8rem 3rem;
-    border-top: 4px solid var(--black);
-    border-bottom: 4px solid var(--black);
-  }
-
-  .section-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-  }
-
-  .about-visual {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
-  .char-stack {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .char-circle {
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    background: var(--yellow);
-    border: 4px solid var(--black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8rem;
-    box-shadow: 6px 6px 0 var(--black);
-    animation: bounce 2.5s ease-in-out infinite;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-16px); }
-  }
-
-  .about-text .label {
-    font-family: 'Boogaloo', cursive;
-    font-size: 1rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--pink);
-    margin-bottom: 1rem;
-  }
-
-  .about-text h2 {
-    font-family: 'Boogaloo', cursive;
-    font-size: 3.5rem;
-    line-height: 1;
-    margin-bottom: 1.5rem;
-    color: var(--black);
-  }
-
-  .about-text p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #444;
-    margin-bottom: 1rem;
-  }
-
-  .stat-row {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .stat {
-    text-align: center;
-  }
-  .stat-num {
-    font-family: 'Boogaloo', cursive;
-    font-size: 2.5rem;
-    color: var(--pink);
-    display: block;
-  }
-  .stat-lab {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #888;
-  }
-
-  /* VIDEOS / CONTENT GRID */
-  .content-section {
-    background: var(--blue);
-    padding: 8rem 3rem;
-    border-top: 4px solid var(--black);
-    border-bottom: 4px solid var(--black);
-  }
-
-  .section-title {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(3rem, 6vw, 5rem);
-    text-align: center;
-    margin-bottom: 4rem;
-    color: var(--black);
-  }
-
-  .video-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .video-card {
-    background: var(--black);
-    border: 3px solid var(--black);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 5px 5px 0 var(--black);
-    transition: transform 0.15s, box-shadow 0.15s;
-    cursor: none;
-  }
-  .video-card:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 8px 8px 0 var(--black);
-  }
-
-  .video-thumb {
-    width: 100%;
-    aspect-ratio: 9/16;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .thumb-1 { background: linear-gradient(135deg, #FF6B9D, #FF8C42); }
-  .thumb-2 { background: linear-gradient(135deg, #A855F7, #4ECDC4); }
-  .thumb-3 { background: linear-gradient(135deg, #FFE135, #FF4757); }
-
-  .video-thumb .play {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .video-thumb .char-emoji {
-    font-size: 4rem;
-    animation: thumbWiggle 2s ease-in-out infinite;
-  }
-
-  .video-card:nth-child(2) .char-emoji { animation-delay: 0.6s; }
-  .video-card:nth-child(3) .char-emoji { animation-delay: 1.2s; }
-
-  @keyframes thumbWiggle {
-    0%, 100% { transform: rotate(-8deg); }
-    50% { transform: rotate(8deg); }
-  }
-
-  .play-btn {
-    width: 52px; height: 52px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    border: 3px solid var(--black);
-  }
-
-  .video-info {
-    padding: 1rem 1.2rem;
-    background: var(--black);
-    color: var(--white);
-  }
-
-  .video-info h3 {
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.2rem;
-    margin-bottom: 0.25rem;
-    color: var(--yellow);
-  }
-
-  .video-info p {
-    font-size: 0.8rem;
-    opacity: 0.6;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* COLLAB */
-  .collab {
-    background: var(--black);
-    padding: 8rem 3rem;
-    border-top: 4px solid var(--black);
-  }
-
-  .collab .section-title { color: var(--yellow); }
-
-  .brand-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .brand-pill {
-    background: transparent;
-    border: 2px solid rgba(255,255,255,0.2);
-    border-radius: 50px;
-    padding: 0.8rem 2rem;
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.4rem;
-    letter-spacing: 2px;
-    color: var(--white);
-    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
-    cursor: none;
-  }
-  .brand-pill:hover {
-    background: var(--yellow);
-    border-color: var(--yellow);
-    color: var(--black);
-    transform: scale(1.05) rotate(-2deg);
-  }
-
-  /* MERCH */
-  .merch {
-    background: var(--orange);
-    padding: 8rem 3rem;
-    border-top: 4px solid var(--black);
-    border-bottom: 4px solid var(--black);
-  }
-
-  .merch-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .merch-card {
-    background: var(--white);
-    border: 3px solid var(--black);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 4px 4px 0 var(--black);
-    transition: transform 0.15s, box-shadow 0.15s;
-    cursor: none;
-  }
-  .merch-card:hover {
-    transform: translate(-2px, -4px) rotate(-1deg);
-    box-shadow: 6px 8px 0 var(--black);
-  }
-
-  .merch-img {
-    width: 100%;
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    border-bottom: 3px solid var(--black);
-  }
-
-  .merch-bg-1 { background: #FF6B9D22; }
-  .merch-bg-2 { background: #4ECDC422; }
-  .merch-bg-3 { background: #FFE13544; }
-  .merch-bg-4 { background: #A855F722; }
-
-  .merch-info {
-    padding: 0.9rem 1rem;
-  }
-  .merch-info h4 {
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.1rem;
-    color: var(--black);
-    margin-bottom: 0.3rem;
-  }
-  .merch-info p {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--pink);
-  }
-
-  /* SOCIAL */
-  .social-section {
-    background: var(--pink);
-    padding: 8rem 3rem;
-    border-top: 4px solid var(--black);
-    border-bottom: 4px solid var(--black);
-    text-align: center;
-  }
-
-  .social-section h2 {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(3rem, 7vw, 6rem);
-    color: var(--black);
-    margin-bottom: 1rem;
-  }
-
-  .social-section p {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: rgba(0,0,0,0.6);
-    margin-bottom: 3rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .social-btns {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .social-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0.9rem 2rem;
-    border: 3px solid var(--black);
-    border-radius: 50px;
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.3rem;
-    text-decoration: none;
-    color: var(--black);
-    box-shadow: 4px 4px 0 var(--black);
-    transition: transform 0.1s, box-shadow 0.1s;
-    cursor: none;
-  }
-  .social-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 var(--black);
-  }
-
-  .social-btn.tiktok { background: var(--black); color: var(--yellow); }
-  .social-btn.insta { background: var(--orange); }
-  .social-btn.yt { background: var(--red); color: var(--white); }
-
-  /* FOOTER */
-  footer {
-    background: var(--black);
-    color: var(--white);
-    padding: 3rem;
-    text-align: center;
-    border-top: 4px solid var(--yellow);
-  }
-
-  footer .footer-logo {
-    font-family: 'Boogaloo', cursive;
-    font-size: 2.5rem;
-    color: var(--yellow);
-    margin-bottom: 1rem;
-    display: block;
-  }
-
-  footer p {
-    font-size: 0.85rem;
-    opacity: 0.4;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  /* FLOATING BITS */
-  .floaties {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .floatie {
-    position: absolute;
-    font-size: 2rem;
-    animation: floatUp linear infinite;
-    opacity: 0.15;
-  }
-
-  @keyframes floatUp {
-    from { transform: translateY(110vh) rotate(0deg); opacity: 0.15; }
-    to { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* Mobile */
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { gap: 1rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .video-grid { grid-template-columns: 1fr; }
-    .merch-grid { grid-template-columns: repeat(2, 1fr); }
-    .about-visual { order: -1; }
-    .hero-sausage { font-size: 6rem; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLOCKH3ADS — Anybody Can Be Weird</title>
+
+  <!--
+    Google Fonts:
+    - Black Han Sans  → chunky, all-caps block lettering for titles
+    - Space Grotesk   → bold geometric body text with a blocky feel
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* =============================================
+       COLOUR PALETTE
+       These are the brand colours used everywhere.
+       Change them here and they update site-wide.
+    ============================================= */
+    :root {
+      --yellow: #fffba9;
+      --pink:   #ff8db3;
+      --blue:   #4ECDC4;
+      --royal-blue:   #172fde;
+      --orange: #FF8C42;
+      --purple: #330e57;
+      --green:  #207a6f;
+      --red:    #FF4757;
+      --black:  #111111;
+      --white:  #FFFEF0;
+      --bright-yellow: #fff268;
+    }
+
+    /* =============================================
+       GLOBAL RESET & BASE STYLES
+       Removes default browser spacing and sets
+       the base font and background colour.
+    ============================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth; /* smooth scroll when clicking nav links */
+    }
+
+    body {
+      background: var(--purple);
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--black);
+      overflow-x: hidden; /* prevents horizontal scrollbar */
+      cursor: none;       /* hides the default cursor (we use a custom one) */
+    }
+
+    /* =============================================
+       CUSTOM CURSOR
+       A small pink square that follows your mouse.
+       It grows when hovering over clickable things.
+    ============================================= */
+    .custom-cursor {
+      width: 24px;
+      height: 24px;
+      background: var(--pink);
+      border-radius: 10%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* cursor can't accidentally block clicks */
+      z-index: 9999;
+      transition: transform 0.1s ease, background 0.2s ease;
+      mix-blend-mode: multiply;
+    }
+
+    /* When hovering a link/button, cursor turns blue */
+    .custom-cursor.is-hovering {
+      transform: scale(1.5);
+      background: var(--blue);
+    }
+
+    /* =============================================
+       NAVIGATION BAR
+       Fixed to the top of the screen at all times.
+    ============================================= */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: var(--black);
+    }
+
+    .navbar-logo {
+      font-family: 'Maximum voltage', cursive;
+      font-size: 1.2rem;
+      color: var(--white);
+      letter-spacing: 1.px;
+      text-decoration: none;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .navbar-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 60;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.2s;
+    }
+
+    .navbar-links a:hover {
+      color: var(--yellow);
+    }
+
+    /* =============================================
+       HERO SECTION
+       The big intro section at the top of the page.
+    ============================================= */
+    .hero-section {
+      min-height: 120vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--yellow);
+      position: relative;
+      overflow: visible;
+      padding-top: px; /* leaves room for the fixed navbar */
+      /*
+        Do NOT add z-index here — it would create a stacking context
+        and prevent the marquee below from blending against this background.
+      */
+    }
+
+    /* Decorative blobs floating in the background */
+    .hero-blob-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      /*
+        Isolate the blob container so its animated children don't
+        force the parent hero-section into a stacking context.
+        The blobs stay inside this container and don't affect blending outside.
+      */
+      isolation: isolate;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 45%;
+      animation: blobFloat 6s ease-in-out infinite;
+    }
+
+    .blob-1 { width: 400px; height: 400px; background: var(--pink);   opacity: 0.2; top: -100px;  right: -100px; animation-delay: 0s; }
+    .blob-2 { width: 300px; height: 300px; background: var(--blue);   opacity: 0.2; bottom: -80px; left: -80px;  animation-delay: 2s; }
+    .blob-3 { width: 200px; height: 200px; background: var(--orange); opacity: 0.2; top: 60%;     right: 15%;   animation-delay: 4s; }
+
+    @keyframes blobFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%       { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* The text + image in the centre of the hero */
+    .hero-content {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /*
+      HERO MASCOT IMAGE SIZE
+      ──────────────────────
+      Change the clamp values to resize the mascot:
+        clamp(MIN, PREFERRED, MAX)
+      e.g. clamp(10rem, 22vw, 16rem) makes it bigger
+    */
+    .hero-mascot-image {
+      width: clamp(10rem, 22vw, 16rem);
+      height: auto;
+      display: block;
+      margin: 0 auto 1.5rem;
+      animation: wiggle 1.5s ease-in-out infinite;
+      filter: drop-shadow(4px 4px 0px var(--black));
+      object-fit: contain;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-8deg) scale(1); }
+      25%       { transform: rotate(8deg) scale(1.05); }
+      50%       { transform: rotate(-5deg) scale(0.98); }
+      75%       { transform: rotate(5deg) scale(1.03); }
+    }
+
+    .hero-title {
+      font-family: 'Black Han Sans', cursive;
+      font-size: clamp(3rem, 1vw, 9rem);
+      line-height: 0.9;
+      color: var(--black);
+      letter-spacing: -2px;
+      margin-bottom: 1.rem;
+    }
+
+    /* The coloured word that cycles through colours */
+    .hero-title .colour-word {
+      color: var(--pink);
+      display: inline-block;
+      animation: colourCycle 2s ease-in-out infinite;
+    }
+
+    @keyframes colourCycle {
+      0%, 100% { color: var(--pink); }
+      33%       { color: var(--orange); }
+      66%       { color: var(--purple); }
+    }
+
+    .hero-tagline {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 2.5rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* =============================================
+       REUSABLE BUTTON STYLES
+       .btn          = base style shared by all buttons
+       .btn-dark     = black background (primary action)
+       .btn-pink     = pink background (secondary action)
+    ============================================= */
+    .btn {
+      padding: 1rem 2.5rem;
+      font-family: 'Black Han Sans', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      border: 3px solid var(--black);
+      border-radius: 50px;
+      cursor: none;
+      transition: transform 0.1s, box-shadow 0.1s;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 4px 4px 0 var(--black);
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--black);
+    }
+
+    .btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--black);
+    }
+
+    .btn-dark { background: var(--black); color: var(--yellow); }
+    .btn-pink { background: var(--pink);  color: var(--black); }
+    .btn-green { background: var(--green);  color: var(--white); }
+
+    /* =============================================
+       SCROLLING MARQUEE BANNER
+       The black strip with scrolling text between sections.
+    ============================================= */
+    /* =============================================
+       SCROLLING MARQUEE BANNER
+       Sits between the hero (yellow) and about
+       (purple) sections. The text uses mix-blend-mode
+       so where it overlaps the yellow hero above it
+       reads as dark, and where it overlaps the purple
+       section below it reads as light — automatically.
+    ============================================= */
+    .marquee-banner {
+      /*
+        We give this a fixed height matching the text size so it
+        takes up space in the document flow (sections push around it).
+        The actual text is positioned absolutely so it can overlap
+        both sections without clipping.
+      */
+      height: 7rem;            /* matches font-size of .marquee-item */
+      margin: -3.5rem 0;       /* pulls it into the sections above and below */
+      position: relative;
+      /*
+        NO z-index — adding z-index here would create a stacking context
+        and trap the blend mode, preventing it from compositing against
+        the yellow/purple section backgrounds behind it.
+      */
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scrollLeft 40s linear infinite;
+    }
+
+    .marquee-item {
+      font-family: 'maximum voltage', cursive;
+      font-size: 7rem;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      padding: 0 2rem;
+      line-height: 1;
+      color:rgba(255, 0, 238, 0.3);
+      /*
+        mix-blend-mode on the item itself.
+        'difference' inverts: white text on yellow → yellow-ish dark
+                              white text on purple → bright/inverted
+        Try also: multiply, screen, overlay, color-dodge, exclusion
+        
+        NOTE: Do NOT set opacity on this element — opacity creates a
+        stacking context and breaks the blend mode. Use rgba() on color
+        if you want transparency, e.g. color: rgba(255,255,255,0.8)
+      */
+      mix-blend-mode: linear-lighten;
+      position: relative; /* establishes blend context without needing z-index */
+    }
+
+    .marquee-item .star-dot {
+      color: var(--yellow);
+      margin: 0 0.5rem;
+    }
+
+    @keyframes scrollLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* =============================================
+       REUSABLE SECTION WRAPPER
+       Centred container for section content.
+    ============================================= */
+    .section-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Black Han Sans', cursive;
+      font-size: clamp(3rem, 6vw, 5rem);
+      text-align: center;
+      margin-bottom: 4rem;
+      color: var(--black);
+    }
+
+    /* =============================================
+       ABOUT SECTION
+    ============================================= */
+    .about-section {
+      background: var(--purple);
+      padding: 8rem 3rem;
+      border-top: 4px solid var(--black);
+      border-bottom: 4px solid var(--black);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    /* Left side: the bouncing character image */
+    .about-image-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .character-frame {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .character-circle {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: var(--yellow);
+      border: 4px solid var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 6px 6px 0 var(--black);
+      animation: bounce 2.5s ease-in-out infinite;
+      overflow: hidden;
+    }
+
+    .character-circle img {
+      width: 60%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-16px); }
+    }
+
+    /* Right side: the text content */
+    .about-text-column .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .about-text-column h2 {
+      font-family: 'Black Han Sans', cursive;
+      font-size: 3.5rem;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      color: var(--yellow);
+    }
+
+    .about-text-column p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    /* Stats row (100k+ followers, etc.) */
+    .stats-row {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Black Han Sans', cursive;
+      font-size: 2.5rem;
+      color: var(--pink);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* =============================================
+       VIDEOS SECTION
+    ============================================= */
+    .videos-section {
+      background: var(--blue);
+      padding: 8rem 3rem;
+      border-top: 4px solid var(--black);
+      border-bottom: 4px solid var(--black);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Each card is just the video — no title bar below */
+    .video-card {
+      border: 3px solid var(--black);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 5px 5px 0 var(--black);
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: none;
+      aspect-ratio: 9 / 16; /* portrait video shape */
+      position: relative;
+      background: var(--black);
+    }
+
+    .video-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    /*
+      TikTok embed cropping:
+      TikTok's embed renders a profile bar at the top (~60px) and
+      an action bar / footer at the bottom (~130px). We hide both by:
+        1. Absolutely positioning the iframe inside a clipping frame
+        2. Shifting it up so the top chrome is off-screen
+        3. Making it taller so the bottom chrome is also off-screen
+      The blockquote is hidden — it's just the fallback before the
+      TikTok script replaces it with an iframe.
+    */
+    .tiktok-crop-frame {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;  /* clips everything outside the card bounds */
+    }
+
+    /* Hide the raw blockquote (pre-script fallback) */
+    .tiktok-crop-frame blockquote.tiktok-embed {
+      display: none !important;
+    }
+
+    /* The real player iframe TikTok injects */
+    .tiktok-crop-frame iframe {
+      position: absolute !important;
+      /* Top offset hides the profile/username bar (~60px) */
+      top: -62px !important;
+      left: 0 !important;
+      width: 100% !important;
+      /* Extra height compensates for both top offset + bottom action bar (~130px) */
+      height: calc(100% + 192px) !important;
+      min-width: unset !important;
+      max-width: unset !important;
+      border: none !important;
+      margin: 0 !important;
+    }
+
+    /* Placeholder thumbnail cards (cards 2 & 3) */
+    .video-thumbnail {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .thumbnail-gradient-2 { background: linear-gradient(135deg, #A855F7, #4ECDC4); }
+    .thumbnail-gradient-3 { background: linear-gradient(135deg, #FFE135, #FF4757); }
+
+    .thumbnail-overlay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .thumbnail-emoji {
+      font-size: 5rem;
+      animation: thumbWiggle 2s ease-in-out infinite;
+    }
+
+    .video-card:nth-child(2) .thumbnail-emoji { animation-delay: 0.6s; }
+    .video-card:nth-child(3) .thumbnail-emoji { animation-delay: 1.2s; }
+
+    @keyframes thumbWiggle {
+      0%, 100% { transform: rotate(-8deg); }
+      50%       { transform: rotate(8deg); }
+    }
+
+    /* The video title overlay sits at the bottom of the card */
+    .video-title-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1rem 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      color: var(--white);
+    }
+
+    .video-title-overlay h3 {
+      font-family: 'Black Han Sans', cursive;
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+      color: var(--yellow);
+    }
+
+    .video-title-overlay p {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .play-button {
+      width: 52px;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      border: 3px solid var(--black);
+    }
+
+    /* =============================================
+       BRAND COLLABS SECTION
+    ============================================= */
+    .collabs-section {
+      background: var(--black);
+      padding: 8rem 3rem;
+      border-top: 4px solid var(--black);
+    }
+
+    .collabs-section .section-title {
+      color: var(--yellow);
+    }
+
+    .brand-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .brand-badge {
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      padding: 0.8rem 2rem;
+      font-family: 'Black Han Sans', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--white);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
+      cursor: none;
+    }
+
+    .brand-badge:hover {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      color: var(--black);
+      transform: scale(1.05) rotate(-2deg);
+    }
+
+    /* =============================================
+       MERCH / SHOP SECTION
+    ============================================= */
+    .merch-section {
+      background: var(--orange);
+      padding: 8rem 3rem;
+      border-top: 4px solid var(--black);
+      border-bottom: 4px solid var(--black);
+    }
+
+    /* 3 items — evenly spaced, max width keeps them from stretching too wide */
+    .merch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .merch-card {
+      background: var(--white);
+      border: 3px solid var(--black);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0 var(--black);
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: none;
+    }
+
+    .merch-card:hover {
+      transform: translate(-2px, -4px) rotate(-1deg);
+      
+      box-shadow: 6px 8px 0 var(--black);
+    }
+
+    /* The image/emoji area of each product card */
+    .merch-image-area {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      border-bottom: 3px solid var(--black);
+    }
+
+    /* Each product card gets a different tinted background */
+    .merch-bg-pink   { background: #FF6B9D22; }
+    .merch-bg-teal   { background: #4ECDC422; }
+    .merch-bg-yellow { background: #FFE13544; }
+    .merch-bg-purple { background: #A855F722; }
+
+    .merch-product-info {
+      padding: 0.9rem 1rem;
+    }
+
+    .merch-product-info h4 {
+      font-family: 'arial', bold, sans-serif;
+      font-size: 1.1rem;
+      color: var(--black);
+      margin-bottom: 0.2rem;
+    }
+
+    /* Small pill label showing the product type e.g. "Facecap" */
+    .merch-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: var(--black);
+      color: var(--yellow);
+      border-radius: 50px;
+      padding: 0.15rem 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .merch-product-info p {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--pink);
+    }
+
+    /* =============================================
+       WORK WITH US — consolidated section
+       (services grid on top, CTA row below)
+    ============================================= */
+    .work-with-us-section {
+      background: var(--yellow);
+      padding: 8rem 3rem;
+      border-top: 4px solid var(--black);
+      border-bottom: 4px solid var(--black);
+    }
+
+    .work-title { color: var(--black); }
+
+    .work-intro {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: rgba(0,0,0,0.6);
+      margin-top: -2.5rem;
+      margin-bottom: 4rem;
+    }
+
+    /* 3-column services grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto 5rem;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 3px solid var(--black);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      box-shadow: 5px 5px 0 var(--black);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .service-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Black Han Sans', cursive;
+      font-size: 1.3rem;
+      color: var(--black);
+      margin-bottom: 0.6rem;
+      letter-spacing: 1px;
+    }
+
+    .service-card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(0,0,0,0.65);
+    }
+
+    /* CTA strip — two columns: perks left, contact right */
+    .work-cta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1100px;
+      margin: 0 auto;
+      border: 4px solid var(--black);
+      border-radius: 20px;
+      box-shadow: 8px 8px 0 rgba(0,0,0,0.25);
+      overflow: hidden;
+    }
+
+    .work-text-block {
+      background: var(--black);
+      padding: 3rem;
+    }
+
+    .work-text-block .section-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--pink);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .work-text-block p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.5rem;
+    }
+
+    .work-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .perk {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--yellow);
+    }
+
+    .work-cta-box {
+      background: var(--purple);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .cta-eyebrow {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--pink);
+    }
+
+    .work-cta-box h3 {
+      font-family: 'Black Han Sans', cursive;
+      font-size: 2.5rem;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .btn-yellow { background: var(--yellow); color: var(--black); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .navbar { padding: 1rem 1.5rem; }
+      .navbar-links { gap: 1rem; font-size: 0.75rem; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-image-column { order: -1; }
+
+      .video-grid { grid-template-columns: 1fr; }
+      .merch-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .work-cta-row { grid-template-columns: 1fr; }
+    }
+
+
+    /* =============================================
+       MEET THE TEAM SECTION
+       Not in the navbar — sits between Work With Us
+       and the Follow section.
+    ============================================= */
+    .team-section {
+      background: var(--blue  );
+      padding: 8rem 3rem;
+      border-top: 4px solid var(--black);
+      border-bottom: 4px solid var(--black);
+    }
+
+    .team-section .section-title {
+      color: var(--black);
+    }
+
+    /* Row of team member cards */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .team-card {
+      background: var(--black);
+      border: 3px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .team-card:hover {
+      transform: translate(-3px, -5px);
+      box-shadow: 9px 11px 0 rgba(0,0,0,0.4);
+    }
+
+    /*
+      TEAM MEMBER PHOTO
+      ─────────────────
+      Each .team-photo is a circle frame.
+      Replace the emoji placeholder with an <img> tag
+      pointing to each person's photo, e.g.:
+        <img src="images/john.jpg" alt="John">
+      Recommended size: at least 200×200px, square crop.
+    */
+    .team-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--yellow);
+      border: 4px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      font-size: 3.5rem;       /* size of the placeholder emoji */
+      overflow: hidden;
+      box-shadow: 4px 4px 0 rgba(255,255,255,0.1);
+    }
+
+    /* If you use a real <img> inside .team-photo: */
+    .team-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;       /* fills circle, crops edges */
+      border-radius: 50%;
+    }
+
+    .team-name {
+      font-family: 'Open Sans', cursive;
+      font-size: 1.25rem;
+      color: var(--yellow);
+      margin-bottom: 0.3rem;
+      letter-spacing: 1px;
+    }
+
+    .team-role {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--pink);
+      margin-bottom: 1rem;
+    }
+
+    .team-bio {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+    }
+
+    @media (max-width: 768px) {
+      .team-grid { grid-template-columns: 1fr; max-width: 380px; }
+    }
+
+    /* =============================================
+       SOCIAL / FOLLOW SECTION
+    ============================================= */
+    .social-section {
+      background: var(--pink);
+      padding: 8rem 3rem;
+      border-top: 4px solid var(--black);
+      border-bottom: 4px solid var(--black);
+      text-align: center;
+    }
+
+    .social-section h2 {
+      font-family: 'Open Sans', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gree);
+      margin-bottom: 1rem;
+    }
+
+    .social-section p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.6);
+      margin-bottom: 3rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .social-button-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.9rem 2rem;
+      border: 3px solid var(--black);
+      border-radius: 50px;
+      font-family: 'Black Han Sans', cursive;
+      font-size: 1.3rem;
+      text-decoration: none;
+      color: var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      transition: transform 0.1s, box-shadow 0.1s;
+      cursor: none;
+    }
+
+    .social-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--black);
+    }
+
+    .social-btn.tiktok    { background: var(--black);  color: var(--yellow); }
+    .social-btn.instagram { background: var(--orange); }
+    .social-btn.youtube   { background: var(--red);    color: var(--white); }
+    .social-btn.facebook  { background: var(--royal-blue);   color: var(--white); }
+    .social-btn.snapchat  { background: var(--bright-yellow);   color: var(--black); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .site-footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 8cqw;
+      text-align: center;
+      border-top: 4px solid var(--yellow);
+    }
+
+    .site-footer .footer-logo {
+      font-family: 'Maximum voltage', cursive;
+      font-size: 1.5rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .site-footer p {
+      font-size: 0.85rem;
+      opacity: 0.4;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* =============================================
+       FLOATING BACKGROUND EMOJIS
+       These drift up the screen in the background.
+    ============================================= */
+    .floating-emojis-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp linear infinite;
+      opacity: 0.15;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(110vh) rotate(0deg);   opacity: 0.15; }
+      to   { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Mobile styles are now defined at the bottom of the Services/Work section above */
+
+    /* =============================================
+       CHARACTER IMAGE UPLOAD BUTTON
+       Shows in the hero so you can pick a local
+       image — it then appears in both the hero
+       mascot spot and the About section circle.
+    ============================================= */
+    .upload-wrapper {
+      margin-top: 1.5rem;
+    }
+
+    .upload-label {
+      display: inline-block;
+      padding: 0.6rem 1.6rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border: 2px dashed var(--black);
+      border-radius: 50px;
+      cursor: pointer;
+      color: var(--black);
+      background: rgba(0,0,0,0.08);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .upload-label:hover {
+      background: rgba(0,0,0,0.15);
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+
+  </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
+  <!-- =============================================
+       CUSTOM CURSOR (the moving square)
+  ============================================= -->
+  <div class="custom-cursor" id="customCursor"></div>
 
-<div class="floaties" id="floaties"></div>
+  <!-- =============================================
+       FLOATING BACKGROUND EMOJIS
+       (filled in by JavaScript at the bottom)
+  ============================================= -->
+  <div class="floating-emojis-container" id="floatingEmojis"></div>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#">🌭 Wiggly World</a>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#videos">Videos</a>
-    <a href="#merch">Merch</a>
-    <a href="#social">Follow</a>
-  </div>
-</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-circles">
-    <div class="blob blob1"></div>
-    <div class="blob blob2"></div>
-    <div class="blob blob3"></div>
-  </div>
-  <div class="hero-content">
-    <div class="hero-sausage">🌭</div>
-    <h1 class="hero-title">Anybody<br>Can Be <span>Weird</span></h1>
-    <p class="hero-sub">Vibrant · Silly · Unstoppable</p>
-    <div class="hero-btns">
-      <a href="#videos" class="btn btn-primary">Watch Now ▶</a>
-      <a href="#merch" class="btn btn-secondary">Get Merch 🛍</a>
+  <!-- =============================================
+       NAVIGATION BAR
+  ============================================= -->
+  <nav class="navbar">
+    <a class="navbar-logo" href="#"> BLOCKH3ADS</a>
+    <div class="navbar-links">
+      <a href="#about">About</a>
+      <a href="#merch">Shop</a>
+      <a href="#work-with-us">contact</a>
+      <a href="#social">Follow</a>
+    </div>
+  </nav>
+
+
+  <!-- =============================================
+       HERO SECTION — Main intro area
+  ============================================= -->
+  <section class="hero-section">
+
+    <!-- Background floating blobs -->
+    <div class="hero-blob-container">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Centred content: mascot, title, buttons -->
+    <div class="hero-content">
+
+      <!--
+        HERO MASCOT IMAGE
+        ─────────────────
+        To swap this image: replace "images/sausage.svg" with the path
+        to your file, e.g. src="images/my-character.png"
+        You can also change the width in .hero-mascot-image below.
+      -->
+      <img
+        src="images/sausage.svg"
+        alt="Hero mascot"
+        class="hero-mascot-image"
+        id="heroMascotImage"
+      >
+
+      <h1 class="hero-title">
+        Anybody<br>Can Be <span class="colour-word">Weird</span>
+      </h1>
+
+      <p class="hero-tagline">Vibrant · Silly · Unstoppable</p>
+
+      <div class="hero-buttons">
+        <a href="#videos" class="btn btn-dark">Watch Now ▶</a>
+        <a href="#work-with-us" class="btn btn-pink">Work With Us 😉</a>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =============================================
+       MARQUEE BANNER — Scrolling text strip
+  ============================================= -->
+  <div class="marquee-banner">
+    <div class="marquee-track" id="marqueeTrack">
+      <!-- Items are duplicated so the scroll loops seamlessly -->  
+      <div class="marquee-item"> blockh3ads <span class="star-dot">-</span></div>
+<div class="marquee-item">BLOCKH3ADS <span class="star-dot">-</span></div>
+<div class="marquee-item">ANYBODY CAN BE WEIRD <span class="star-dot">-</span></div>
+<div class="marquee-item">100K+ FOLLOWERS <span class="star-dot">-</span></div>
+<div class="marquee-item">COLOURFUL · BOLD · STRANGE <span class="star-dot">-</span></div>
+
+<!-- Duplicate set -->
+<div class="marquee-item">BLOCKH3ADS <span class="star-dot">-</span></div>
+<div class="marquee-item">ANYBODY CAN BE WEIRD <span class="star-dot">-</span></div>
+<div class="marquee-item">100K+ FOLLOWERS <span class="star-dot">-</span></div>
+<div class="marquee-item">COLOURFUL · BOLD · STRANGE <span class="star-dot">-</span></div>
     </div>
   </div>
-</section>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track" id="marquee">
-    <div class="marquee-item">🌭 WIGGLY WORLD <span class="dot">✦</span></div>
-    <div class="marquee-item">ANYBODY CAN BE WEIRD <span class="dot">✦</span></div>
-    <div class="marquee-item">35M+ FOLLOWERS <span class="dot">✦</span></div>
-    <div class="marquee-item">🌭 DANCING NEVER STOPS <span class="dot">✦</span></div>
-    <div class="marquee-item">COLOURFUL · BOLD · STRANGE <span class="dot">✦</span></div>
-    <div class="marquee-item">🌭 WIGGLY WORLD <span class="dot">✦</span></div>
-    <div class="marquee-item">ANYBODY CAN BE WEIRD <span class="dot">✦</span></div>
-    <div class="marquee-item">35M+ FOLLOWERS <span class="dot">✦</span></div>
-    <div class="marquee-item">🌭 DANCING NEVER STOPS <span class="dot">✦</span></div>
-    <div class="marquee-item">COLOURFUL · BOLD · STRANGE <span class="dot">✦</span></div>
-  </div>
-</div>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="section-inner">
-    <div class="about-grid">
-      <div class="about-visual">
-        <div class="char-stack">
-          <div class="char-circle" id="charCircle">🌭</div>
-        </div>
-      </div>
-      <div class="about-text">
-        <p class="label">✦ The Universe</p>
-        <h2>Just a little joy &amp; a whole lot of weird</h2>
-        <p>Wiggly World started with one dancing sausage and a lot of free time. What began as a creative experiment turned into a global movement of colour, chaos, and pure unfiltered fun.</p>
-        <p>We make animated characters that don't take themselves too seriously — because life's too short not to wiggle.</p>
-        <div class="stat-row">
-          <div class="stat">
-            <span class="stat-num">35M+</span>
-            <span class="stat-lab">Followers</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">500M+</span>
-            <span class="stat-lab">Views</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">40+</span>
-            <span class="stat-lab">Brand Collabs</span>
+  <!-- =============================================
+       ABOUT SECTION — Who is BLOCKH3ADS?
+  ============================================= -->
+  <section class="about-section" id="about">
+    <div class="section-wrapper">
+      <div class="about-grid">
+
+        <!-- Left column: bouncing character image -->
+        <div class="about-image-column">
+          <div class="character-frame">
+            <div class="character-circle" id="characterCircle">
+              <!--
+                ABOUT SECTION IMAGE
+                ───────────────────
+                This image is SEPARATE from the hero mascot above.
+                To swap it: change src="images/sausage.svg" to your file path.
+                The circle clips the image — use a square or circular image
+                for best results. Adjust size in .character-circle img in CSS.
+              -->
+              <img
+                src="images/sausage.svg"
+                alt="BLOCKH3ADS character"
+                id="characterCircleImage"
+              >
+            </div>
           </div>
         </div>
+
+        <!-- Right column: text + stats -->
+        <div class="about-text-column">
+          <span class="section-label">- The Universe</span>
+          <h2>Funny &amp; a whole lot of weird</h2>
+          <p>BLOCKH3ADS started with one BOX head character. What began as a creative experiment turned into a global movement of colour, chaos, and pure unfiltered fun.</p>
+          <p>We make animated characters that don't take themselves too seriously — because life's too short to (B)LOCK UP.</p>
+
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-number">100k+</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">500M+</span>
+              <span class="stat-label">Views</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">40+</span>
+              <span class="stat-label">Brand Collabs</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CONTENT / VIDEOS -->
-<section class="content-section" id="videos">
-  <div class="section-inner">
-    <h2 class="section-title">🎬 Latest Wiggles</h2>
-    <div class="video-grid">
-      <div class="video-card">
-        <div class="video-thumb thumb-1">
-          <div class="play">
-            <div class="char-emoji">🌭</div>
-            <div class="play-btn">▶</div>
+
+  <!-- =============================================
+       VIDEOS SECTION — Latest content
+  ============================================= -->
+  <!-- TikTok embed script (loads TikTok players) -->
+  <script async src="https://www.tiktok.com/embed.js"></script>
+
+  <section class="videos-section" id="videos">
+    <div class="section-wrapper">
+      <h2 class="section-title">🎬 Latest Videos</h2>
+
+      <div class="video-grid">
+
+        <!-- Video Card 1: real TikTok embed, cropped to video only -->
+        <div class="video-card">
+          <!--
+            .tiktok-crop-frame clips the TikTok embed so only the
+            video itself shows — no profile bar or footer chrome.
+          -->
+          <div class="tiktok-crop-frame">
+            <blockquote
+              class="tiktok-embed"
+              cite="https://www.tiktok.com/@blockh3ads/video/7620899495873858837"
+              data-video-id="7620899495873858837"
+            >
+              <section>
+                <a target="_blank" href="https://www.tiktok.com/@blockh3ads?refer=embed">@blockh3ads</a>
+                how my mom expects me to answer her call
+                <a target="_blank" href="https://www.tiktok.com/tag/calling?refer=embed">#calling</a>
+              </section>
+            </blockquote>
           </div>
         </div>
-        <div class="video-info">
-          <h3>Monday morning energy</h3>
-          <p>22.4M views · 2 days ago</p>
-        </div>
-      </div>
-      <div class="video-card">
-        <div class="video-thumb thumb-2">
-          <div class="play">
-            <div class="char-emoji">🫠</div>
-            <div class="play-btn">▶</div>
+
+        <!-- Video Card 2: TikTok embed -->
+        <div class="video-card">
+          <div class="tiktok-crop-frame">
+            <blockquote
+              class="tiktok-embed"
+              cite="https://www.tiktok.com/@blockh3ads/video/7507780892803358982"
+              data-video-id="7507780892803358982"
+            >
+              <section>
+                <a target="_blank" href="https://www.tiktok.com/@blockh3ads?refer=embed">@blockh3ads</a>
+                <a target="_blank" href="https://www.tiktok.com/tag/blockh3ads?refer=embed">#blockh3ads</a>
+              </section>
+            </blockquote>
           </div>
         </div>
-        <div class="video-info">
-          <h3>When your wifi disconnects</h3>
-          <p>18.1M views · 5 days ago</p>
-        </div>
-      </div>
-      <div class="video-card">
-        <div class="video-thumb thumb-3">
-          <div class="play">
-            <div class="char-emoji">🕺</div>
-            <div class="play-btn">▶</div>
+
+        <!-- Video Card 3: TikTok embed -->
+        <div class="video-card">
+          <div class="tiktok-crop-frame">
+            <blockquote
+              class="tiktok-embed"
+              cite="https://www.tiktok.com/@blockh3ads/video/7484762954056359174"
+              data-video-id="7484762954056359174"
+            >
+              <section>
+                <a target="_blank" href="https://www.tiktok.com/@blockh3ads?refer=embed">@blockh3ads</a>
+                <a target="_blank" href="https://www.tiktok.com/tag/blockh3ads?refer=embed">#blockh3ads</a>
+              </section>
+            </blockquote>
           </div>
         </div>
-        <div class="video-info">
-          <h3>The Friday feeling hits</h3>
-          <p>31.7M views · 1 week ago</p>
-        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- COLLABS -->
-<section class="collab" id="collab">
-  <h2 class="section-title">🤝 Friends We've Wiggled With</h2>
-  <div class="brand-row">
-    <div class="brand-pill">Netflix</div>
-    <div class="brand-pill">Adidas</div>
-    <div class="brand-pill">Hugo Boss</div>
-    <div class="brand-pill">Red Bull</div>
-    <div class="brand-pill">Louboutin</div>
-    <div class="brand-pill">McDonald's</div>
-    <div class="brand-pill">Spotify</div>
-  </div>
-</section>
 
-<!-- MERCH -->
-<section class="merch" id="merch">
-  <div class="section-inner">
-    <h2 class="section-title">🛍 The Shop</h2>
-    <div class="merch-grid">
-      <div class="merch-card">
-        <div class="merch-img merch-bg-1">🌭</div>
-        <div class="merch-info">
-          <h4>Wiggly Tee</h4>
-          <p>$35.00</p>
+  <!-- =============================================
+       BRAND COLLABS SECTION
+  ============================================= -->
+  <section class="collabs-section" id="collab">
+    <h2 class="section-title">🤝 Friends We've BLOCKED With</h2>
+    <div class="brand-logo-row">
+      <div class="brand-badge">Slerg</div>
+      <!-- Add more brand badges here -->
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       MERCH / SHOP SECTION
+  ============================================= -->
+  <section class="merch-section" id="merch">
+    <div class="section-wrapper">
+      <h2 class="section-title"> The Shop 🛍️</h2>
+
+      <!-- 3 products: facecap, t-shirt, mug -->
+      <div class="merch-grid">
+
+        <!-- Product 1: Facecap -->
+        <div class="merch-card">
+          <div class="merch-image-area merch-bg-pink">🧢</div>
+          <div class="merch-product-info">
+            <h4>Blocky Tee</h4>
+            <span class="merch-tag">Facecap</span>
+            <p>$15.00</p>
+          </div>
         </div>
-      </div>
-      <div class="merch-card">
-        <div class="merch-img merch-bg-2">🎒</div>
-        <div class="merch-info">
-          <h4>Wiggly Backpack</h4>
-          <p>$65.00</p>
+
+        <!-- Product 2: T-Shirt -->
+        <div class="merch-card">
+          <div class="merch-image-area merch-bg-teal">👕</div>
+          <div class="merch-product-info">
+            <h4>Anybody Can Be Weird</h4>
+            <span class="merch-tag">T-Shirt</span>
+            <p>$20.00</p>
+          </div>
         </div>
-      </div>
-      <div class="merch-card">
-        <div class="merch-img merch-bg-3">☕</div>
-        <div class="merch-info">
-          <h4>Weird Hours Mug</h4>
-          <p>$22.00</p>
+
+        <!-- Product 3: Mug -->
+        <div class="merch-card">
+          <div class="merch-image-area merch-bg-yellow">☕</div>
+          <div class="merch-product-info">
+            <h4>Blocky Hours Mug</h4>
+            <span class="merch-tag">Mug</span>
+            <p>$9.00</p>
+          </div>
         </div>
-      </div>
-      <div class="merch-card">
-        <div class="merch-img merch-bg-4">🧸</div>
-        <div class="merch-info">
-          <h4>Plushie Friend</h4>
-          <p>$48.00</p>
-        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SOCIAL -->
-<section class="social-section" id="social">
-  <h2>Let's be weird together 🌭</h2>
-  <p>Follow the wiggles</p>
-  <div class="social-btns">
-    <a class="social-btn tiktok" href="#">🎵 TikTok</a>
-    <a class="social-btn insta" href="#">📸 Instagram</a>
-    <a class="social-btn yt" href="#">▶ YouTube</a>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <span class="footer-logo">🌭 Wiggly World</span>
-  <p>© 2026 Wiggly World · Made with joy, chaos, and too much caffeine</p>
-</footer>
+  <!-- =============================================
+       WORK WITH US — Services + contact consolidated
+  ============================================= -->
+  <section class="work-with-us-section" id="work-with-us">
+    <div class="section-wrapper">
 
-<script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = (e.clientX - 12) + 'px';
-    cursor.style.top = (e.clientY - 12) + 'px';
-  });
-  document.querySelectorAll('a, button, .merch-card, .video-card, .brand-pill').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
-  });
+      <!-- Section heading -->
+      <h2 class="section-title work-title">🤝 Work With Us</h2>
+      <p class="work-intro">Got a brand, campaign, or idea that needs a little chaos? Here's what we bring to the table.</p>
 
-  // Floating emojis
-  const floaties = document.getElementById('floaties');
-  const emojis = ['🌭','🎉','⭐','💫','🔥','✨','🎈','🌈','🎶','💥'];
-  for (let i = 0; i < 18; i++) {
-    const el = document.createElement('div');
-    el.className = 'floatie';
-    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    el.style.left = Math.random() * 100 + 'vw';
-    el.style.animationDuration = (8 + Math.random() * 12) + 's';
-    el.style.animationDelay = (Math.random() * 15) + 's';
-    el.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
-    floaties.appendChild(el);
-  }
+      <!-- Services grid -->
+      <div class="services-grid">
 
-  // Character cycle on click
-  const chars = ['🌭','🫠','🕺','💃','🤪','👾','🥳','🐸'];
-  let charIdx = 0;
-  document.getElementById('charCircle').addEventListener('click', () => {
-    charIdx = (charIdx + 1) % chars.length;
-    document.getElementById('charCircle').textContent = chars[charIdx];
-  });
-</script>
+        <div class="service-card">
+          <div class="service-icon">🎬</div>
+          <h3>Animated Content</h3>
+          <p>Original short-form animated videos for TikTok, Reels, and Shorts — built to stop the scroll.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🤝</div>
+          <h3>Brand Collaborations</h3>
+          <p>We embed your brand inside our world in a way that feels native, funny, and actually watchable. No forced ads.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🎨</div>
+          <h3>Character Design</h3>
+          <p>Custom BLOCKH3ADS-style characters for brands, campaigns, or personal IP — bold, blocky, unmistakably weird.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📦</div>
+          <h3>Merch & Product Design</h3>
+          <p>From concept to drop-ready — we design limited merch your audience actually wants to wear and collect.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📣</div>
+          <h3>Social Strategy</h3>
+          <p>Character-led content strategies that grow real, engaged communities across platforms.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🌍</div>
+          <h3>Licensing & IP</h3>
+          <p>License the BLOCKH3ADS universe for your product, event, or platform. Let the weirdness work for you.</p>
+        </div>
+
+      </div>
+
+      <!-- Contact CTA — sits below the services -->
+      <div class="work-cta-row">
+
+        <div class="work-text-block">
+          <span class="section-label">- Let's Build Something</span>
+          <p>Whether you're a startup, a global brand, or a fellow creator — if it's bold, we're in.</p>
+          <div class="work-perks">
+            <div class="perk">✅ Fast turnaround</div>
+            <div class="perk">✅ 100M+ combined reach</div>
+            <div class="perk">✅ Custom packages available</div>
+            <div class="perk">✅ We actually reply to emails</div>
+          </div>
+        </div>
+
+        <div class="work-cta-box">
+          <p class="cta-eyebrow">Ready to get weird?</p>
+          <h3>Let's Talk</h3>
+          <p class="cta-sub">Drop us a message and we'll get back to you within 48 hours.</p>
+          <a href="mailto:blockheadscontent@gmail.com" class="btn btn-yellow">📩 Email Us</a>
+          <a href="#social" class="btn btn-pink" style="margin-top: 0.8rem;">Find Us Online</a>
+          <a href="tel:+2349076007188" class="btn btn-green" style="margin-top: 0.8rem;"> +234 9076007188</a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       MEET THE TEAM
+       Not linked from the navbar — scrolled to naturally.
+       Add or remove .team-card blocks to change the team size.
+  ============================================= -->
+  <section class="team-section" id="team">
+    <div class="section-wrapper">
+      <h2 class="section-title">👥 Meet The Team</h2>
+
+      <div class="team-grid">
+
+        <!--
+          TEAM CARD
+          ─────────
+          .team-photo → swap the emoji for an <img src="images/person.jpg"> tag
+          .team-name  → person's name
+          .team-role  → their title / role
+          .team-bio   → short one-liner about them
+        -->
+        <div class="team-card">
+          <div class="team-photo"><img src="images/tife.jpg" alt="Tife"></div>
+          <p class="team-name">Tife</p>
+          <p class="team-role">Creative Director and founder</p>
+          <p class="team-bio">The brain behind the blocks. Turns chaos into characters.</p>
+        </div>
+                <div class="team-card">
+          <div class="team-photo">✏️</div>
+          <p class="team-name">Team Member</p>
+          <p class="team-role">Lead Animator</p>
+          <p class="team-bio">Makes the BLOCKS move. Powered by spite and good music.</p>
+        </div>
+
+        <div class="team-card">
+          <div class="team-photo">📣</div>
+          <p class="team-name">Team Member</p>
+          <p class="team-role">Asset creator</p>
+          <p class="team-bio">Keeps the energy unhinged. Strategically chaotic.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SOCIAL / FOLLOW SECTION
+  ============================================= -->
+  <section class="social-section" id="social">
+    <h2>Let's be weird together</h2>
+    <p>Follow the blockh3ads</p>
+
+    <div class="social-button-row">
+      <a class="social-btn tiktok"    href="https://www.tiktok.com/@blockh3ads?_r=1&_t=ZS-96Lnw4NSJFM">🎵 TikTok</a>
+      <a class="social-btn instagram" href="https://www.instagram.com/the_blockh3ads?igsh=MTRtZWo0YzJtZHd3bw==">📸 Instagram</a>
+      <a class="social-btn youtube"   href="https://youtube.com/@blockh3ads?si=zbKJB6pnXZQIjso2">▶ YouTube</a>
+      <a class="social-btn facebook"   href="https://www.facebook.com/share/1YWQw3JGRE/">⚪ Facebook</a>
+      <a class="social-btn snapchat"   href="https://www.snapchat.com/add/blockh3ads">⚪ Snapchat</a>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="site-footer">
+    <span class="footer-logo">BLOCKH3ADs</span>
+    <p>© 2026 BLOCKH3ADS · Made with joy, chaos, and too much Zobo</p>
+  </footer>
+
+
+  <!-- =============================================
+       JAVASCRIPT
+       All the interactive behaviour lives here.
+  ============================================= -->
+  <script>
+
+    // ----- Custom Cursor -----
+    // Moves the pink square to follow your mouse.
+    const cursor = document.getElementById('customCursor');
+
+    document.addEventListener('mousemove', function(event) {
+      cursor.style.left = (event.clientX - 12) + 'px';
+      cursor.style.top  = (event.clientY - 12) + 'px';
+    });
+
+    // Make the cursor grow when hovering over clickable elements
+    const clickableElements = document.querySelectorAll(
+      'a, button, .merch-card, .video-card, .brand-badge'
+    );
+
+    clickableElements.forEach(function(element) {
+      element.addEventListener('mouseenter', function() {
+        cursor.classList.add('is-hovering');
+      });
+      element.addEventListener('mouseleave', function() {
+        cursor.classList.remove('is-hovering');
+      });
+    });
+
+
+    // ----- TikTok iframe crop enforcement -----
+    // TikTok's embed.js injects iframes asynchronously. Once injected,
+    // we force the crop styles in case the script overrides them.
+    const cropFrames = document.querySelectorAll('.tiktok-crop-frame');
+
+    cropFrames.forEach(function(frame) {
+      const observer = new MutationObserver(function() {
+        const iframe = frame.querySelector('iframe');
+        if (iframe) {
+          iframe.style.cssText = [
+            'position: absolute !important',
+            'top: -62px !important',
+            'left: 0 !important',
+            'width: 100% !important',
+            'height: calc(100% + 192px) !important',
+            'min-width: unset !important',
+            'max-width: unset !important',
+            'border: none !important',
+            'margin: 0 !important'
+          ].join(';');
+        }
+      });
+      observer.observe(frame, { childList: true, subtree: true });
+    });
+    // Creates 18 emoji elements that slowly float up the screen.
+    const emojiContainer = document.getElementById('floatingEmojis');
+    const emojiList = ['👀', '🎉', '⭐', '💫', '🔥', '✨', '🎈', '🌈', '🎶', '💥'];
+
+    for (let i = 0; i < 18; i++) {
+      const emoji = document.createElement('div');
+      emoji.className = 'floating-emoji';
+      emoji.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
+
+      // Randomise position and speed so they don't all move together
+      emoji.style.left              = (Math.random() * 100) + 'vw';
+      emoji.style.fontSize          = (1.5 + Math.random() * 2) + 'rem';
+      emoji.style.animationDuration = (8 + Math.random() * 12) + 's';
+      emoji.style.animationDelay    = (Math.random() * 15) + 's';
+
+      emojiContainer.appendChild(emoji);
+    }
+
+  </script>
+
 </body>
 </html>
