@@ -373,11 +373,6 @@
       width: max-content;
       animation: scrollLeft 40s linear infinite;
     }
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      animation: scrollLeft 40s linear infinite;
-    }
 
     .marquee-item {
       font-family: 'maximum voltage', cursive;
@@ -451,23 +446,7 @@
       justify-content: center;
       gap: 1.5rem;
     }
-    /* Left side: the bouncing character image */
-    .about-image-column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-    }
 
-    .character-frame {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
     .character-frame {
       position: relative;
       width: 280px;
@@ -507,17 +486,6 @@
       margin-bottom: 1rem;
       display: block;
     }
-    /* Right side: the text content */
-    .about-text-column .section-label {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 1rem;
-      display: block;
-    }
 
     .about-text-column h2 {
       font-family: 'Space Grotesk';
@@ -527,12 +495,6 @@
       color: var(--main-purple)
     }
 
-    .about-text-column p {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: #ffffff;
-      margin-bottom: 1rem;
-    }
     .about-text-column p {
       font-size: 1.1rem;
       line-height: 1.7;
@@ -662,13 +624,6 @@
       background: linear-gradient(135deg, #FFE135, #FF4757);
     }
 
-    .thumbnail-overlay {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
     .thumbnail-overlay {
       display: flex;
       align-items: center;
@@ -856,15 +811,6 @@
       margin-bottom: 1rem;
     }
 
-    .brand-logo-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      max-width: 900px;
-      margin: 0 auto;
-    }
     .brand-logo-row {
       display: flex;
       align-items: center;
@@ -1398,20 +1344,7 @@
       margin-bottom: 1rem;
       display: block;
     }
-    .site-footer .footer-logo {
-      font-family: 'Maximum voltage', cursive;
-      font-size: 1.5rem;
-      color: var(--white);
-      margin-bottom: 1rem;
-      display: block;
-    }
 
-    .site-footer p {
-      font-size: 0.85rem;
-      opacity: 0.4;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
     .site-footer p {
       font-size: 0.85rem;
       opacity: 0.4;
@@ -1430,24 +1363,7 @@
       z-index: 0;
       overflow: hidden;
     }
-    /* =============================================
-       FLOATING BACKGROUND EMOJIS
-       These drift up the screen in the background.
-    ============================================= */
-    .floating-emojis-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
 
-    .floating-emoji {
-      position: absolute;
-      font-size: 2rem;
-      animation: floatUp linear infinite;
-      opacity: 0.15;
-    }
     .floating-emoji {
       position: absolute;
       font-size: 2rem;
@@ -1508,16 +1424,7 @@
        CUSTOM CURSOR (the moving square)
   ============================================= -->
   <div class="custom-cursor" id="customCursor"></div>
-  <!-- =============================================
-       CUSTOM CURSOR (the moving square)
-  ============================================= -->
-  <div class="custom-cursor" id="customCursor"></div>
 
-  <!-- =============================================
-       FLOATING BACKGROUND EMOJIS
-       (filled in by JavaScript at the bottom)
-  ============================================= -->
-  <div class="floating-emojis-container" id="floatingEmojis"></div>
   <!-- =============================================
        FLOATING BACKGROUND EMOJIS
        (filled in by JavaScript at the bottom)
@@ -2065,14 +1972,6 @@
     </div>
   </section>
 
-
-  <!-- =============================================
-       FOOTER
-  ============================================= -->
-  <footer class="site-footer">
-    <span class="footer-logo">BLOCKH3ADs</span>
-    <p>© 2026 BLOCKH3ADS · Made with joy, chaos, and too much Zobo</p>
-  </footer>
 
   <!-- =============================================
        FOOTER
