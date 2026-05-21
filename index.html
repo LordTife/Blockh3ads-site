@@ -43,6 +43,19 @@
       --gold: #bcc41c;
     }
 
+    /* Load local Maximum Voltage webfont (place files in /fonts/) */
+    @font-face {
+      font-family: 'Maximum Voltage';
+      src: local('Maximum Voltage'),
+           url('fonts/Maximum%20Voltage.otf') format('opentype'),
+           url('fonts/Maximum%20Voltage.ttf') format('truetype'),
+           url('fonts/MaximumVoltage.woff2') format('woff2'),
+           url('fonts/MaximumVoltage.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
     /* =============================================
        GLOBAL RESET & BASE STYLES
        Removes default browser spacing and sets
@@ -243,7 +256,7 @@
     }
 
     .hero-title {
-      font-family: 'maximum voltage', cursive;
+      font-family: 'Maximum Voltage', cursive;
       font-size: clamp(3rem, 9vw, 4rem);
       line-height: 0.9;
       color: var(--black);
@@ -375,7 +388,7 @@
     }
 
     .marquee-item {
-      font-family: 'maximum voltage', cursive;
+      font-family: 'Maximum Voltage', cursive;
       font-size: 2.4rem;
       letter-spacing: 2px;
       white-space: nowrap;
@@ -514,7 +527,7 @@
     }
 
     .stat-number {
-      font-family: 'maximum voltage', cursive;
+      font-family: 'Maximum Voltage', cursive;
       font-size: 2.5rem;
       color: var(--pink);
       display: block;
