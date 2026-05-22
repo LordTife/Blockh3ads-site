@@ -29,7 +29,8 @@
       /* Highlights & Light Shades */
       --main-purple: #8570DC;
       --sec-purple: #09002F;
-      --bright-yellow: #d4dd70;
+      --bright-yellow: #43048b;
+      --yellow: var(--bright-yellow);
       --white: #e0e7ff;
       --pink: #fd89ff;
       --blue: #74e6ff;
@@ -47,10 +48,10 @@
     @font-face {
       font-family: 'Maximum Voltage';
       src: local('Maximum Voltage'),
-           url('fonts/Maximum%20Voltage.otf') format('opentype'),
-           url('fonts/Maximum%20Voltage.ttf') format('truetype'),
-           url('fonts/MaximumVoltage.woff2') format('woff2'),
-           url('fonts/MaximumVoltage.woff') format('woff');
+        url('fonts/Maximum%20Voltage.otf') format('opentype'),
+        url('fonts/Maximum%20Voltage.ttf') format('truetype'),
+        url('fonts/MaximumVoltage.woff2') format('woff2'),
+        url('fonts/MaximumVoltage.woff') format('woff');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -109,6 +110,26 @@
       background: var(--blue);
     }
 
+    /* Hide custom cursor and restore standard cursor on touch/pointer-coarse devices */
+    @media (hover: none),
+    (pointer: coarse) {
+      .custom-cursor {
+        display: none !important;
+      }
+
+      body {
+        cursor: auto !important;
+      }
+
+      a,
+      button,
+      .merch-card,
+      .video-card,
+      .brand-badge {
+        cursor: pointer !important;
+      }
+    }
+
     /* =============================================
        NAVIGATION BAR
        Fixed to the top of the screen at all times.
@@ -123,7 +144,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 5rem;
-      background: rgba(0, 0, 0, 0.0)
+      background: transparent;
     }
 
     .navbar-logo {
@@ -164,6 +185,30 @@
 
     .navbar-links a:hover {
       background: var(--yellow);
+    }
+
+    /* =============================================
+       MOBILE NAVIGATION TOGGLE BUTTON
+    ============================================= */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 32px;
+      height: 22px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+      padding: 0;
+    }
+
+    .menu-toggle .bar {
+      width: 100%;
+      height: 4px;
+      background-color: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s ease-in-out;
     }
 
     /* =============================================
@@ -276,7 +321,7 @@
 
     /* The coloured word that cycles through colours */
     .hero-title .colour-word {
-      color: var(--blac);
+      color: var(--black);
       display: inline-block;
       animation: colourCycle 10s ease-in-out infinite;
     }
@@ -285,7 +330,7 @@
 
       0%,
       100% {
-        color: var(--blac);
+        color: var(--black);
       }
 
       33% {
@@ -393,7 +438,7 @@
       font-size: 2.4rem;
       letter-spacing: 2px;
       white-space: nowrap;
-      padding: 1 rem;
+      padding: 1rem;
       line-height: 1;
       /* A medium-light colour works best for color-dodge to create a glow without washing out */
       color: rgba(196, 182, 182, 0.2);
@@ -401,7 +446,7 @@
     }
 
     .marquee-item .star-dot {
-      color: var(--g);
+      color: var(--pink);
       margin: 25px;
     }
 
@@ -608,7 +653,7 @@
       transform: translate(-50%, -50%);
       font-size: 6rem;
       color: rgba(255, 255, 255, 0.9);
-      opacity: 6;
+      opacity: 0.7;
       transition: opacity 0.2s, transform 0.2s;
       pointer-events: none;
       /* Let clicks pass through */
@@ -616,7 +661,7 @@
     }
 
     .video-link-wrapper:hover .play-overlay {
-      opacity: ;
+      opacity: 1;
       transform: translate(-50%, -50%) scale(1.1);
     }
 
@@ -734,12 +779,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2x;
+      gap: 2px;
       pointer-events: all;
       cursor: none;
       background: none;
       border: none;
-      padding: ;
+      padding: 0;
       text-decoration: none;
     }
 
@@ -1113,7 +1158,7 @@
     }
 
     .work-cta-box h3 {
-      font-family: 'Maximum voltage', cursive;
+      font-family: 'Maximum Voltage', cursive;
       font-size: 2.5rem;
       color: var(--black);
       line-height: 1;
@@ -1137,15 +1182,108 @@
       color: var(--black);
     }
 
-    /* Mobile */
+    /* Mobile Consolidated Rules */
     @media (max-width: 768px) {
+
+      /* Navigation Menu Drawer & Hamburger Toggle */
+      .menu-toggle {
+        display: flex !important;
+        width: 44px;
+        height: 44px;
+        background: var(--white);
+        border: none;
+        padding: 10px;
+        box-shadow: none;
+        border-radius: 7px;
+      }
+
+      .menu-toggle .bar {
+        background-color: var(--sec-purple);
+      }
+
+      .menu-toggle.is-active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+        background-color: var(--sec-purple);
+      }
+
+      .menu-toggle.is-active .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.is-active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+        background-color: var(--sec-purple);
+      }
+
       .navbar {
-        padding: 1rem 1.5rem;
+        padding: 0.8rem 1.5rem;
+        background: transparent;
+      }
+
+      .navbar-logo img {
+        height: clamp(45px, 8vw, 60px);
       }
 
       .navbar-links {
-        gap: 1rem;
-        font-size: 0.75rem;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        height: 100vh;
+        background: var(--sec-purple);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem;
+        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 100;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+        border-radius: 0;
+        border-left: 4px solid var(--black);
+      }
+
+      .navbar-links.is-active {
+        right: 0;
+      }
+
+      .navbar-links a {
+        font-size: 1.6rem;
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+        color: var(--white);
+        font-weight: 700;
+        background: transparent;
+      }
+
+      .navbar-links a:hover {
+        background: var(--bright-yellow);
+        color: var(--black);
+      }
+
+      /* Hero Section Spacing */
+      .hero-section {
+        min-height: 80vh;
+        padding-top: 6rem;
+      }
+
+      .hero-buttons {
+        gap: 1.2rem;
+      }
+
+      .btn {
+        font-size: 1.1rem;
+        padding: 0.8rem 1.2rem;
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+
+      /* About Section & Stats Wrapping */
+      .about-section {
+        padding: 5rem 1.5rem;
       }
 
       .about-grid {
@@ -1157,20 +1295,118 @@
         order: -1;
       }
 
+      .character-frame {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .character-circle img {
+        width: 170%;
+        margin-left: -100px;
+      }
+
+      .stats-row {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .stat-item {
+        flex: 1 1 90px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      /* Video Section Centering */
+      .videos-section {
+        padding: 5rem 1.5rem;
+      }
+
       .video-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
+        justify-items: center;
+      }
+
+      .video-card {
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+      }
+
+      /* Brand Collabs Badge Row */
+      .collabs-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .brand-logo-row {
+        gap: 1.2rem;
+      }
+
+      .brand-badge {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      /* Shop Section Header Collision & Card Scaling */
+      .merch-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .merch-section>.section-wrapper>div[style*="display: flex"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
       }
 
       .merch-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
+        justify-items: center;
+        margin: 30px auto;
+      }
+
+      .merch-card {
+        width: 100%;
+        max-width: 340px;
+      }
+
+      /* Services Grid & CTA Row */
+      .work-with-us-section {
+        padding: 5rem 1.5rem;
       }
 
       .services-grid {
         grid-template-columns: 1fr;
+        gap: 1.2rem;
       }
 
       .work-cta-row {
         grid-template-columns: 1fr;
+      }
+
+      .work-text-block,
+      .work-cta-box {
+        padding: 1.8rem;
+      }
+
+      /* Social Buttons Font Scaling */
+      .social-section {
+        padding: 5rem 1.5rem;
+      }
+
+      .social-button-row {
+        gap: 1rem 1.5rem;
+      }
+
+      .social-btn {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        letter-spacing: -1px;
       }
     }
 
@@ -1201,6 +1437,8 @@
       display: flex;
       align-items: center;
       gap: 1.5rem;
+      transform: translateY(var(--scroll-y, 0px));
+      transition: transform 0.1s ease-out;
     }
 
     .team-avatar {
@@ -1352,7 +1590,7 @@
     }
 
     .site-footer .footer-logo {
-      font-family: 'Maximum voltage', cursive;
+      font-family: 'Maximum Voltage', cursive;
       font-size: 1.5rem;
       color: var(--white);
       margin-bottom: 1rem;
@@ -1453,7 +1691,12 @@
     <a class="navbar-logo" href="#">
       <img src="images/logo.svg" alt="BLOCKH3ADS Logo">
     </a>
-    <div class="navbar-links">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <div class="navbar-links" id="navbarLinks">
       <a href="#about">About</a>
       <a href="#work-with-us">Contact</a>
       <a href="#merch">Shop</a>
@@ -2065,6 +2308,28 @@
     });
 
 
+    // ----- Mobile Navigation Toggle -----
+    const menuToggle = document.getElementById('menuToggle');
+    const navbarLinks = document.getElementById('navbarLinks');
+
+    if (menuToggle && navbarLinks) {
+      const navItems = navbarLinks.querySelectorAll('a');
+
+      menuToggle.addEventListener('click', function () {
+        menuToggle.classList.toggle('is-active');
+        navbarLinks.classList.toggle('is-active');
+      });
+
+      // Close menu when clicking a link
+      navItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          menuToggle.classList.remove('is-active');
+          navbarLinks.classList.remove('is-active');
+        });
+      });
+    }
+
+
     // ----- Marquee blend mode & colour control -----
     // mix-blend-mode doesn't accept CSS custom properties (browser limitation),
     // so we read the data attributes and apply them as direct inline styles.
@@ -2101,7 +2366,7 @@
     // ----- Scroll Parallax for Team Cards -----
     const handleTeamScroll = () => {
       const teamSection = document.querySelector('.team-section');
-      const cards = document.querySelectorAll('.team-card');
+      const cards = document.querySelectorAll('.team-profile');
       if (!teamSection || cards.length === 0) return;
 
       const rect = teamSection.getBoundingClientRect();
