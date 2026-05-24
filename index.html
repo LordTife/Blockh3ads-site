@@ -32,7 +32,7 @@
       --sec-purple: #09002F;
       --bright-yellow: #43048b;
       --yellow: var(--bright-yellow);
-      --white: #e0e7ff;
+      --white: #ffffff;
       --pink: #fd89ff;
       --blue: #74e6ff;
       --orange: #ff8800;
@@ -148,7 +148,11 @@
       background: transparent;
     }
 
-
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
 
     .navbar-logo img {
       height: clamp(80px, 5vw, 100px);
@@ -203,7 +207,7 @@
     .menu-toggle .bar {
       width: 100%;
       height: 4px;
-      background-color: var(--sec-purple);
+      background-color: var(--white);
       border-radius: 2px;
       transition: all 0.3s ease-in-out;
     }
@@ -217,7 +221,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--white);
+      background: var(--main-purple);
       position: relative;
       overflow: visible;
       padding-top: 2rem;
@@ -300,12 +304,11 @@
 
     .hero-title {
       font-family: 'Maximum Voltage', cursive;
-      font-size: clamp(2.2rem, 10vw, 3.2rem);
+      font-size: clamp(3rem, 9vw, 4rem);
       line-height: 0.9;
       color: var(--black);
-      letter-spacing: 2px;
+      letter-spacing: -2px;
       margin-bottom: 1rem;
-      margin-top: rem;
     }
 
     /* "dy Can Be A" — softer, separate font */
@@ -313,18 +316,15 @@
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 300;
       letter-spacing: 2px;
-      font-size: 0.5em;
+      font-size: 0.75em;
       display: block;
-      margin-bottom: .3rem;
-      margin-top: 1rem;
     }
 
     /* The coloured word that cycles through colours */
     .hero-title .colour-word {
-      /*color: var(--black);
-      display: inline-block;
-      animation: colourCycle 10s ease-in-out infinite;*/
       color: var(--black);
+      display: inline-block;
+      animation: colourCycle 10s ease-in-out infinite;
     }
 
     @keyframes colourCycle {
@@ -344,10 +344,10 @@
     }
 
     .hero-tagline {
-      font-size: 1.1rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: var(--black);
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       letter-spacing: 3px;
       text-transform: uppercase;
       opacity: 0.4;
@@ -355,14 +355,9 @@
 
     .hero-buttons {
       display: flex;
-      gap: 2rem;
+      gap: 4rem;
       justify-content: center;
       flex-wrap: wrap;
-    }
-
-    .hero-section .btn {
-      font-size: 1.1rem;
-      padding: 0.8rem 1.2rem;
     }
 
     /* =============================================
@@ -489,7 +484,7 @@
        ABOUT SECTION
     ============================================= */
     .about-section {
-      background: var(--purple);
+      background: var(--sec-purple);
       padding: 16rem 4rem 14rem;
       /* no border-top — the marquee acts as the visual divider */
       border-bottom: 4px solid var(--black);
@@ -659,7 +654,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 3rem;
+      font-size: 6rem;
       color: rgba(255, 255, 255, 0.9);
       opacity: 0.7;
       transition: opacity 0.2s, transform 0.2s;
@@ -866,7 +861,7 @@
        BRAND COLLABS SECTION
     ============================================= */
     .collabs-section {
-      background: var(--purple);
+      background: var(--sec-purple);
       padding: 8rem 3rem;
       /*border-top: 4px solid var(--black)*/
     }
@@ -941,10 +936,10 @@
       text-decoration: none;
       color: inherit;
       background: var(--white);
-      /*border: 3px solid var(--black);*/
+      border: 3px solid var(--black);
       border-radius: 5px;
       overflow: hidden;
-      /*box-shadow: 4px 4px 0 var(--sec-purple);*/
+      box-shadow: 4px 4px 0 var(--sec-purple);
       transition: transform 0.15s, box-shadow 0.15s;
       cursor: none;
     }
@@ -952,7 +947,7 @@
     .merch-card:hover {
       transform: translate(-2px, -4px) rotate(-1deg);
 
-      /*box-shadow: 6px 8px 0 var(--black);*/
+      box-shadow: 6px 8px 0 var(--black);
     }
 
     /* The image/emoji area of each product card */
@@ -963,7 +958,7 @@
       align-items: center;
       justify-content: center;
       font-size: 4rem;
-      /*border-bottom: 3px solid var(--black);*/
+      border-bottom: 3px solid var(--black);
       overflow: hidden;
     }
 
@@ -1032,7 +1027,7 @@
        (services grid on top, CTA row below)
     ============================================= */
     .work-with-us-section {
-      background: var(--white);
+      background: var(--main-purple);
       padding: 8rem 3rem;
     }
 
@@ -1048,7 +1043,7 @@
       text-align: left;
       font-size: 1.2rem;
       font-weight: 600;
-      color: rgba(85, 85, 85, 0.603);
+      color: rgba(255, 255, 255, 0.8);
       margin-top: -1.5rem;
       margin-bottom: 4rem;
     }
@@ -1057,7 +1052,6 @@
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: 1fr;
       gap: 1.5rem;
       max-width: 1100px;
       margin: 0 auto 5rem;
@@ -1070,10 +1064,6 @@
       padding: 2rem 1.5rem;
       box-shadow: 5px 5px 0 var(--black);
       transition: transform 0.15s, box-shadow 0.15s;
-      */ display: flex;
-      flex-direction: column;
-      height: 100%;
-      min-height: 250px;
     }
 
     .service-card:hover {
@@ -1098,7 +1088,6 @@
       font-size: 0.95rem;
       line-height: 1.6;
       color: rgba(0, 0, 0, 0.65);
-      flex-grow: 1;
     }
 
     /* CTA strip — two columns: perks left, contact right */
@@ -1438,7 +1427,6 @@
 
       .services-grid {
         grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 1fr;
         gap: 0.8rem;
       }
 
@@ -1446,10 +1434,6 @@
         padding: 1rem 0.8rem;
         box-shadow: 3px 3px 0 var(--black);
         border-width: 2px;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        min-height: 210px;
       }
 
       .service-icon {
@@ -1525,29 +1509,28 @@
        and the Follow section.
     ============================================= */
     .team-section {
-      background: var(--pink);
+      background: var(--sec-purple);
       padding: 1rem 2rem 1rem;
       /*border-bottom: 5px solid var(--royal-blue);*/
     }
 
     .team-section .section-title {
-      color: var(--sec-purple);
+      color: var(--main-purple);
       font-family: 'Space Grotesk', sans-serif;
       font-size: 1.1rem;
       font-weight: 700;
-      letter-spacing: .1px;
-      text-transform: lowercase;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       text-align: left;
       margin-bottom: 0.8rem;
-      opacity: .6;
     }
 
     .team-profile {
       display: flex;
       align-items: center;
       gap: 1rem;
-      /*transform: translateY(var(--scroll-y, 0px));
-     transition: transform 0.1s ease-out;*/
+      transform: translateY(var(--scroll-y, 0px));
+      transition: transform 0.1s ease-out;
     }
 
     .team-avatar {
@@ -1555,7 +1538,7 @@
       height: 70px;
       border-radius: 50%;
       overflow: hidden;
-      border: 2px solid var(--white);
+      border: 2px solid var(--black);
       background: var(--white);
       flex-shrink: 0;
     }
@@ -1585,7 +1568,7 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.95rem;
       font-weight: 500;
-      color: var(--white);
+      color: var(--pink);
       opacity: 0.85;
       margin: 0;
       line-height: 1.1;
@@ -1618,7 +1601,7 @@
        SOCIAL / FOLLOW SECTION
     ============================================= */
     .social-section {
-      background: var(--white);
+      background: var(--main-purple);
       padding: 5rem 3rem;
       text-align: center;
     }
@@ -1824,7 +1807,7 @@
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
       <div class="blob blob-3"></div>
-    </div>
+    </div> 
 
     <!-- Centred content: mascot, title, buttons -->
     <div class="hero-content">
