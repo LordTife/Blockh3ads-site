@@ -18,6 +18,11 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@400;600;700&display=swap"
     rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Grotesk:wght@300..700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     /* =============================================
@@ -40,7 +45,7 @@
       --green: #15510d;
       --lemon: #00FF8E;
       --red: #f90000;
-      --purple: #5f29a6;
+      --purple: #5d35ee;
       --black: #0a0410;
       --gold: #bcc41c;
     }
@@ -148,11 +153,7 @@
       background: transparent;
     }
 
-    .navbar-logo {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
+
 
     .navbar-logo img {
       height: clamp(80px, 5vw, 100px);
@@ -167,25 +168,27 @@
 
     .navbar-links {
       display: flex;
-      background: var(--white);
-      border-radius: 5px;
+      background: rgb(255, 255, 255);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
       padding: .4rem;
     }
 
     .navbar-links a {
       text-decoration: none;
-      font-weight: 1000;
-      font-size: 1rem;
-      text-transform: Title Case;
-      letter-spacing: 2px;
-      padding: 0.6rem .7rem;
-      border-radius: 50px;
-      color: var(--black);
-      transition: background 0.1s;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1.5px;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      color: var(--purple);
+      transition: background 0.2s, color 0.2s;
     }
 
     .navbar-links a:hover {
-      background: var(--yellow);
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
     }
 
     /* =============================================
@@ -195,6 +198,7 @@
       display: none;
       flex-direction: column;
       justify-content: space-between;
+      color: var(--black);
       width: 32px;
       height: 22px;
       background: transparent;
@@ -202,162 +206,266 @@
       cursor: pointer;
       z-index: 101;
       padding: 0;
+      border-radius: 50px;
     }
 
     .menu-toggle .bar {
       width: 100%;
       height: 4px;
       background-color: var(--white);
-      border-radius: 2px;
+      border-radius: 20px;
       transition: all 0.3s ease-in-out;
     }
 
     /* =============================================
-       HERO SECTION
-       The big intro section at the top of the page.
+       HERO SECTION — Premium dark immersive design
     ============================================= */
     .hero-section {
-      min-height: 90vh;
+      min-height: 100vh;
+      max-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--main-purple);
+      background: var(--purple);
       position: relative;
-      overflow: visible;
-      padding-top: 2rem;
-      /* leaves room for the fixed navbar */
-      /*
-        Do NOT add z-index here — it would create a stacking context
-        and prevent the marquee below from blending against this background.
-      */
+      overflow: hidden;
+      padding-top: 0;
     }
 
-    /* Decorative blobs floating in the background */
-    .hero-blob-container {
+    /* Grid overlay */
+    .hero-section::before {
+      content: '';
       position: absolute;
       inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
       pointer-events: none;
-      overflow: hidden;
-      /*
-        Isolate the blob container so its animated children don't
-        force the parent hero-section into a stacking context.
-        The blobs stay inside this container and don't affect blending outside.
-      */
-      isolation: isolate;
+      z-index: 1;
     }
 
-    /* .blob {
+    /* Vignette and bottom blend overlay */
+    .hero-section::after {
+      content: '';
       position: absolute;
-      border-radius: 5%;
-      animation: blobFloat 6s ease-in-out infinite;
+      inset: 0;
+      /*background:
+        linear-gradient(to bottom, transparent 60%, var(--white) 100%),
+        radial-gradient(ellipse at center, transparent 40%, rgba(60, 40, 140, 0.5) 100%);
+      pointer-events: none;
+      z-index: 2;*/
     }
 
-    .blob-1 {
-      width: 400px;
-      height:200px;
-      background: var(--pink);
-      opacity: 0.1;
-      top: -100px;
-      right: -100px;
-      animation-delay: 0s;
-    }
-
-    .blob-2 {
-      width: 300px;
-      height: 300px;
-      background: var(--blue);
-      rotate: 45deg;
-      opacity: 0.2;
-      bottom: -80px;
-      left: -80px;
-      animation-delay: 2s;
-    }
-
-    .blob-3 {
-      width: 200px;
-      height: 200px;
-      background: var(--sec-purple);
-      opacity: 0.05;
-      top: 37%;
-      right: 1%;
-      animation-delay: 4s;
-    }
-
-    @keyframes blobFloat {
-
-      0%,
-      100% {
-        transform: translateY(0) scale(1);
-      }
-
-      50% {
-        transform: translateY(-30px) scale(1.05);
-      }
-    }
-
-    /* The text + image in the centre of the hero */
     .hero-content {
       text-align: center;
       position: relative;
-      z-index: 2;
+      z-index: 3;
+      padding: 2rem 1.5rem;
+      max-width: 900px;
+    }
+
+    /* Small label above the title */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: lowercase;
+      color: var(--lemon);
+      margin-bottom: 1.5rem;
+      opacity: 0.4
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--lemon);
+      opacity: 0.6;
     }
 
     .hero-title {
-      font-family: 'Maximum Voltage', cursive;
-      font-size: clamp(3rem, 9vw, 4rem);
+      font-family: 'righteous';
+      font-size: clamp(4rem, 9vw, 9rem);
       line-height: 0.9;
-      color: var(--black);
-      letter-spacing: -2px;
-      margin-bottom: 1rem;
+      color: #ffffff;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+      position: relative;
     }
 
-    /* "dy Can Be A" — softer, separate font */
+    /* "Everybody Can Be" subtitle */
     .hero-title .hero-subtitle-words {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 300;
-      letter-spacing: 2px;
-      font-size: 0.75em;
+      letter-spacing: 6px;
+      font-size: 0.22em;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title .colour-word {
+      color: #ffffff;
       display: block;
     }
 
-    /* The coloured word that cycles through colours */
-    .hero-title .colour-word {
-      color: var(--black);
-      display: inline-block;
-      animation: colourCycle 10s ease-in-out infinite;
-    }
-
-    @keyframes colourCycle {
-
-      0%,
-      100% {
-        color: var(--black);
-      }
-
-      33% {
-        color: var(--lemon);
-      }
-
-      66% {
-        color: var(--sec-purple);
-      }
-    }
-
     .hero-tagline {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--black);
-      margin-bottom: 2.5rem;
-      letter-spacing: 3px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 3rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      opacity: 0.4;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 4rem;
+      gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
+    }
+
+    .hero-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 15px;
+      text-decoration: none;
+      cursor: none;
+      transition: all 0.25s ease;
+      background: var(--lemon);
+      color: var(--black);
+      border: 15px solid var(--lemon);
+    }
+
+    .hero-btn-primary:hover {
+      background: var(--pink);
+      border-color: var(--pink);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(253, 137, 255, 0.3);
+    }
+
+    .hero-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 15px;
+      text-decoration: none;
+      cursor: none;
+      transition: all 0.25s ease;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    /* Scroll indicator */
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+
+    .hero-scroll-hint svg {
+      width: 20px;
+      opacity: 0.4;
+    }
+
+    @keyframes scrollBounce {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(6px);
+      }
+    }
+
+    /* Inline-block character O replacement in BLOCKH3AD */
+    .hero-o-wrapper {
+      display: inline-block;
+      position: relative;
+      width: 0.82em;
+      height: 0.82em;
+      vertical-align: middle;
+      margin: 0 -0.05em 0.1em;
+      overflow: visible;
+    }
+
+    .hero-o-wrapper img {
+      width: 100%;
+      height: 100%;
+      scale: calc(140%) !important;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease;
+      filter: drop-shadow(0 4px 10px rgba(25, 6, 68, 0.877));
+    }
+
+    .hero-o-wrapper:hover img {
+      transform: scale(1.2) rotate(-8deg);
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+    }
+
+    /* Hero mobile */
+    @media (max-width: 768px) {
+      .hero-section {
+        min-height: 100svh;
+      }
+
+      .hero-eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+      }
+
+      .hero-tagline {
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+      }
+
+      .hero-btn-primary,
+      .hero-btn-secondary {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
     }
 
     /* =============================================
@@ -437,20 +545,22 @@
     }
 
     .marquee-item {
-      font-family: 'Maximum Voltage', cursive;
-      font-size: 2.4rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
       letter-spacing: 2px;
       white-space: nowrap;
-      padding: 1rem;
-      line-height: 1;
-      /* A medium-light colour works best for color-dodge to create a glow without washing out */
-      color: rgba(196, 182, 182, 0.2);
-      opacity: 0.3;
+      padding: 0.5rem 1.5rem;
+      line-height: 1.2;
+      color: var(--purple);
+      opacity: 0.1;
+      text-transform: uppercase;
     }
 
     .marquee-item .star-dot {
-      color: var(--pink);
-      margin: 25px;
+      color: var(--lemon);
+      margin: 0 1.5rem;
+      opacity: 0.2;
     }
 
     @keyframes scrollLeft {
@@ -484,10 +594,8 @@
        ABOUT SECTION
     ============================================= */
     .about-section {
-      background: var(--sec-purple);
+      background: var(--white);
       padding: 16rem 4rem 14rem;
-      /* no border-top — the marquee acts as the visual divider */
-      border-bottom: 4px solid var(--black);
       position: relative;
       overflow: visible;
       /* lets marquee extend upward into hero */
@@ -544,7 +652,7 @@
       font-weight: 700;
       letter-spacing: 8px;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--purple);
       margin-bottom: 1rem;
       display: block;
     }
@@ -554,13 +662,14 @@
       font-size: 3rem;
       line-height: 1;
       margin-bottom: 1.8rem;
-      color: var(--main-purple)
+      color: var(--black);
     }
 
     .about-text-column p {
       font-size: 1.1rem;
+      font-weight: 400;
       line-height: 1.7;
-      color: #ffffff;
+      color: var(--black);
       margin-bottom: 1rem;
     }
 
@@ -576,9 +685,9 @@
     }
 
     .stat-number {
-      font-family: 'Maximum Voltage', cursive;
+      font-family: 'Righteous';
       font-size: 2.5rem;
-      color: var(--pink);
+      color: var(--purple);
       display: block;
     }
 
@@ -587,14 +696,14 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(10, 4, 16, 0.6);
     }
 
     /* =============================================
        VIDEOS SECTION
     ============================================= */
     .videos-section {
-      background: rgb(255, 237, 237);
+      background: rgb(255, 255, 255);
       padding: 8rem 3rem;
       /*border-top: 4px solid var(--black);*/
       /*border-bottom: 4px solid var(--black);*/
@@ -654,7 +763,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 6rem;
+      font-size: 3rem;
       color: rgba(255, 255, 255, 0.9);
       opacity: 0.7;
       transition: opacity 0.2s, transform 0.2s;
@@ -858,56 +967,138 @@
     }
 
     /* =============================================
-       BRAND COLLABS SECTION
+       THE BLOCK LIST — COLLABS SECTION
     ============================================= */
     .collabs-section {
-      background: var(--sec-purple);
+      background: var(--purple);
       padding: 8rem 3rem;
-      /*border-top: 4px solid var(--black)*/
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle radial glow behind the section */
+    .collabs-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(198, 255, 0, 0.08) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .collabs-section .section-title {
       color: var(--lemon);
+      font-family: 'Righteous', cursive;
+      font-size: 1.7rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .collabs-subtitle {
+      color: rgba(255, 255, 255, 0.5);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
+      font-size: .8em;
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
     }
 
     .brand-logo-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3rem;
+      gap: 1rem;
       flex-wrap: wrap;
-      max-width: 900px;
+      max-width: 90px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes badgeFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glowPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 12px rgba(198, 255, 0, 0.15), inset 0 0 12px rgba(198, 255, 0, 0.05);
+      }
+
+      50% {
+        box-shadow: 0 0 24px rgba(198, 255, 0, 0.3), inset 0 0 18px rgba(198, 255, 0, 0.1);
+      }
     }
 
     .brand-badge {
-      background: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-      padding: 0.8rem 2rem;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      border: 1.5px solid rgba(198, 255, 0, 0.25);
+      border-radius: 8px;
+      padding: 1rem 2.4rem;
       font-family: 'Black Han Sans', cursive;
       font-size: 1.4rem;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
+      text-transform: titlecase;
       color: var(--white);
-      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
       cursor: none;
+      transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      animation: badgeFadeUp 0.6s ease-out both, glowPulse ease-in-out infinite;
+    }
+
+    .brand-badge:nth-child(1) {
+      animation-delay: 0s, 0s;
+    }
+
+    .brand-badge:nth-child(2) {
+      animation-delay: 0.12s, 0.12s;
+    }
+
+    .brand-badge:nth-child(3) {
+      animation-delay: 0.24s, 0.24s;
+    }
+
+    .brand-badge:nth-child(4) {
+      animation-delay: 0.36s, 0.36s;
+    }
+
+    .brand-badge:nth-child(5) {
+      animation-delay: 0.48s, 0.48s;
     }
 
     .brand-badge:hover {
-      background: var(--yellow);
-      border-color: var(--yellow);
+      background: var(--lemon);
+      border-color: var(--lemon);
       color: var(--black);
-      transform: scale(1.05) rotate(-2deg);
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow: 0 0 30px rgba(198, 255, 0, 0.5);
+      animation: none;
     }
 
     /* =============================================
        MERCH / SHOP SECTION
     ============================================= */
     .merch-section {
-      background: var(--lemon);
+      background: var(--pink);
       padding: 4rem 4rem;
       /*border-top: 4px solid var(--black);*/
       /*border-bottom: 4px solid var(--black);*/
@@ -936,10 +1127,10 @@
       text-decoration: none;
       color: inherit;
       background: var(--white);
-      border: 3px solid var(--black);
+      /*border: 3px solid var(--black);*/
       border-radius: 5px;
       overflow: hidden;
-      box-shadow: 4px 4px 0 var(--sec-purple);
+      /*box-shadow: 4px 4px 0 var(--sec-purple);*/
       transition: transform 0.15s, box-shadow 0.15s;
       cursor: none;
     }
@@ -947,7 +1138,7 @@
     .merch-card:hover {
       transform: translate(-2px, -4px) rotate(-1deg);
 
-      box-shadow: 6px 8px 0 var(--black);
+      /*box-shadow: 6px 8px 0 var(--black);*/
     }
 
     /* The image/emoji area of each product card */
@@ -958,7 +1149,7 @@
       align-items: center;
       justify-content: center;
       font-size: 4rem;
-      border-bottom: 3px solid var(--black);
+      /*border-bottom: 3px solid var(--black);*/
       overflow: hidden;
     }
 
@@ -1027,162 +1218,244 @@
        (services grid on top, CTA row below)
     ============================================= */
     .work-with-us-section {
-      background: var(--main-purple);
+      background: #ffffff;
+      /* Premium pure white */
       padding: 8rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-with-us-section::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(100, 85, 231, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .work-with-us-section::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      right: -10%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 142, 0.03) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .work-title {
       color: var(--sec-purple);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-      text-align: left;
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-align: center;
+      margin-bottom: 1rem;
     }
 
     .work-intro {
-      text-align: left;
+      text-align: center;
       font-size: 1.2rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.8);
-      margin-top: -1.5rem;
-      margin-bottom: 4rem;
+      font-weight: 400;
+      color: rgba(10, 4, 16, 0.6);
+      max-width: 600px;
+      margin: 0 auto 5rem;
+      line-height: 1.6;
     }
 
     /* 3-column services grid */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto 5rem;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto 6rem;
     }
 
     .service-card {
-      background: var(--white);
-      border: 3px solid var(--black);
-      border-radius: 5px;
-      padding: 2rem 1.5rem;
-      box-shadow: 5px 5px 0 var(--black);
-      transition: transform 0.15s, box-shadow 0.15s;
+      background: #f4f4f4;
+      border: 1px solid rgba(9, 0, 47, 0.06);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 250px;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .service-card:nth-child(even) {
+      background: #e8e8e8;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(100, 85, 231, 0.03) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .service-card:hover {
-      transform: translate(-3px, -3px);
-      box-shadow: 8px 8px 0 var(--black);
+      transform: translateY(-5px);
+      border-color: rgba(100, 85, 231, 0.25);
+      background: rgba(9, 0, 47, 0.04);
+      box-shadow: 0 15px 30px rgba(9, 0, 47, 0.05);
     }
 
-    .service-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon-wrapper {
+      width: 60px;
+      height: 60px;
+      background: rgba(9, 0, 47, 0.04);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(9, 0, 47, 0.03);
+    }
+
+    .service-card:hover .service-icon-wrapper {
+      background: rgba(100, 85, 231, 0.08);
+      border-color: rgba(100, 85, 231, 0.15);
+      transform: scale(1.1) rotate(5deg);
     }
 
     .service-card h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.3rem;
-      color: var(--black);
-      margin-bottom: 0.6rem;
-      letter-spacing: 1px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--sec-purple);
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.2px;
     }
 
     .service-card p {
-      font-size: 0.95rem;
+      font-size: 1rem;
       line-height: 1.6;
-      color: rgba(0, 0, 0, 0.65);
+      color: rgba(10, 4, 16, 0.65);
+      flex-grow: 1;
     }
 
-    /* CTA strip — two columns: perks left, contact right */
-    .work-cta-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      max-width: 1100px;
+    /* Clean Minimalist CTA Card */
+    .work-cta-card {
+      max-width: 850px;
       margin: 0 auto;
-      border: 4px solid var(--black);
-      border-radius: 7px;
-      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.25);
+      background: var(--purple);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      position: relative;
       overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(9, 0, 47, 0.15);
     }
 
-    .work-text-block {
-      background: var(--black);
-      padding: 3rem;
+    .work-cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(253, 137, 255, 0.06) 0%, transparent 60%);
+      pointer-events: none;
     }
 
-    .work-text-block .section-label {
+    .work-cta-card .section-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .work-cta-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .work-cta-card .cta-desc {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    .cta-button-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-btn {
+      padding: 0.8rem 1.6rem;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 1rem;
       font-weight: 700;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--pink);
-      display: block;
-      margin-bottom: 3rem;
-    }
-
-    .work-text-block p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 1.5rem;
-    }
-
-    .work-perks {
-      display: flex;
-      flex-direction: column;
-      gap: 1.7rem;
-    }
-
-    .perk {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .work-cta-box {
-      background: var(--purple);
-      padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
       gap: 0.5rem;
+      border: 2px solid transparent;
+      cursor: none;
     }
 
-    .work-cta-box .btn {
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-      margin-top: 0.8rem;
-    }
-
-    .cta-eyebrow {
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--pink);
-    }
-
-    .work-cta-box h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.5rem;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-    }
-
-    .cta-sub {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .btn-yellow {
-      background: var(--black);
-      color: var(--white);
-    }
-
-    .btn-lemon {
+    .cta-btn-primary {
       background: var(--lemon);
       color: var(--black);
+      border-color: var(--lemon);
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: var(--black);
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .cta-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--white);
+      color: var(--white);
+      transform: translateY(-2px);
     }
 
     /* Mobile Consolidated Rules */
@@ -1197,7 +1470,7 @@
         border: none;
         padding: 10px;
         box-shadow: none;
-        border-radius: 7px;
+        border-radius: 9px;
       }
 
       .menu-toggle .bar {
@@ -1231,9 +1504,9 @@
         position: fixed;
         top: 0;
         right: -100%;
-        width: 75%;
+        width: 100%;
         height: 100vh;
-        background: var(--sec-purple);
+        background: var(--purple);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1243,8 +1516,7 @@
         transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 100;
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-        border-radius: 0;
-        border-left: 4px solid var(--black);
+        border-radius: 10px 0 0 10px;
       }
 
       .navbar-links.is-active {
@@ -1291,16 +1563,33 @@
 
       .about-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 0;
+        position: relative;
+        min-height: 420px;
       }
 
       .about-image-column {
-        order: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.45;
+      }
+
+      .about-text-column {
+        position: relative;
+        z-index: 1;
       }
 
       .character-frame {
         width: 100%;
-        max-width: 250px;
+        max-width: 320px;
         height: auto;
         aspect-ratio: 1;
       }
@@ -1420,85 +1709,88 @@
         padding: 0.1rem 0.4rem;
       }
 
-      /* Services Grid & CTA Row */
+      /* Rebranded Work With Us Section - Mobile */
       .work-with-us-section {
         padding: 5rem 1.5rem;
       }
 
+      .work-title {
+        font-size: 2.2rem;
+      }
+
+      .work-intro {
+        font-size: 1rem;
+        margin-bottom: 3rem;
+      }
+
       .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin-bottom: 4rem;
       }
 
       .service-card {
-        padding: 1rem 0.8rem;
-        box-shadow: 3px 3px 0 var(--black);
-        border-width: 2px;
+        padding: 2rem 1.5rem;
+        min-height: auto;
       }
 
-      .service-icon {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+      .service-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
       }
 
       .service-card h3 {
-        font-size: 0.8rem;
-        margin-bottom: 0.3rem;
+        font-size: 1.2rem;
       }
 
       .service-card p {
-        font-size: 0.65rem;
-        line-height: 1.4;
+        font-size: 0.9rem;
       }
 
-      .work-cta-row {
-        grid-template-columns: 1fr 1fr;
+      .work-cta-card {
+        padding: 2.5rem 1.5rem;
+        border-radius: 16px;
       }
 
-      .work-text-block,
-      .work-cta-box {
-        padding: 1.5rem;
+      .work-cta-card h3 {
+        font-size: 2rem;
       }
 
-      .work-text-block .section-label {
-        font-size: 0.75rem;
-        letter-spacing: 3px;
+      .work-cta-card .cta-desc {
+        font-size: 0.95rem;
         margin-bottom: 1.5rem;
       }
 
-      .work-text-block p {
-        font-size: 0.8rem;
+      .cta-button-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
       }
 
-      .perk {
-        font-size: 0.75rem;
+      .cta-btn {
+        width: 100%;
+        justify-content: center;
       }
 
-      .work-cta-box h3 {
-        font-size: 1.6rem;
-      }
-
-      .cta-sub {
-        font-size: 0.75rem;
-      }
-
-      .work-cta-box .btn {
-        font-size: 0.85rem;
-        padding: 0.6rem 1rem;
-      }
-
-      /* Social Buttons Font Scaling */
+      /* Social Buttons List Layout in Mobile View */
       .social-section {
-        padding: 3rem 1.5rem;
+        padding: 4rem 1.5rem;
       }
 
       .social-button-row {
-        gap: 0.8rem 1.2rem;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
       }
 
       .social-btn {
-        font-size: clamp(1.4rem, 6vw, 2.2rem);
+        font-size: 2.2rem;
         letter-spacing: -1px;
+        display: block;
+        width: 100%;
+        text-align: center;
       }
     }
 
@@ -1509,28 +1801,28 @@
        and the Follow section.
     ============================================= */
     .team-section {
-      background: var(--sec-purple);
-      padding: 1rem 2rem 1rem;
-      /*border-bottom: 5px solid var(--royal-blue);*/
+      background: var(--white);
+      padding: 1rem 7em 5em
     }
 
     .team-section .section-title {
-      color: var(--main-purple);
+      color: var(--sec-purple);
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.1rem;
+      font-size: .8rem;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: .1px;
       text-transform: uppercase;
       text-align: left;
       margin-bottom: 0.8rem;
+      opacity: .6;
     }
 
     .team-profile {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      transform: translateY(var(--scroll-y, 0px));
-      transition: transform 0.1s ease-out;
+      gap: 3rem;
+      /*transform: translateY(var(--scroll-y, 0px));
+     transition: transform 0.1s ease-out;*/
     }
 
     .team-avatar {
@@ -1538,9 +1830,9 @@
       height: 70px;
       border-radius: 50%;
       overflow: hidden;
-      border: 2px solid var(--black);
       background: var(--white);
       flex-shrink: 0;
+      border: none !important;
     }
 
     .team-avatar img {
@@ -1559,7 +1851,7 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 1.3rem;
       font-weight: 700;
-      color: var(--white);
+      color: var(--sec-purple);
       margin: 0;
       line-height: 1.1;
     }
@@ -1568,7 +1860,7 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: 0.95rem;
       font-weight: 500;
-      color: var(--pink);
+      color: var(--sec-purple);
       opacity: 0.85;
       margin: 0;
       line-height: 1.1;
@@ -1601,7 +1893,7 @@
        SOCIAL / FOLLOW SECTION
     ============================================= */
     .social-section {
-      background: var(--main-purple);
+      background: var(--pink);
       padding: 5rem 3rem;
       text-align: center;
     }
@@ -1624,7 +1916,6 @@
       flex-wrap: wrap;
       width: 100%;
       max-width: 1400px;
-      margin: 0 auto;
     }
 
     .social-btn {
@@ -1674,58 +1965,18 @@
        FOOTER
     ============================================= */
     .site-footer {
-      background: var(--sec-purple);
+      background: var(--pink);
       color: var(--white);
       padding: 4cqw;
       text-align: center;
-      border-top: 4px solid var(--yellow);
-    }
-
-    .site-footer .footer-logo {
-      font-family: 'Maximum Voltage', cursive;
-      font-size: 1.5rem;
-      color: var(--white);
-      margin-bottom: 1rem;
-      display: block;
     }
 
     .site-footer p {
-      font-size: 0.85rem;
-      opacity: 0.4;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-size: 0.8rem;
+      opacity: 0.9;
+
     }
 
-    /* =============================================
-       FLOATING BACKGROUND EMOJIS
-       These drift up the screen in the background.
-    ============================================= */
-    .floating-emojis-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .floating-emoji {
-      position: absolute;
-      font-size: 2rem;
-      animation: floatUp linear infinite;
-      opacity: 0.15;
-    }
-
-    @keyframes floatUp {
-      from {
-        transform: translateY(110vh) rotate(0deg);
-        opacity: 0.15;
-      }
-
-      to {
-        transform: translateY(-10vh) rotate(720deg);
-        opacity: 0;
-      }
-    }
 
     /* Mobile styles are now defined at the bottom of the Services/Work section above */
 
@@ -1802,30 +2053,37 @@
   ============================================= -->
   <section class="hero-section">
 
-    <!-- Background floating blobs -->
-    <div class="hero-blob-container">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
-    </div> 
+    <!-- Floating ambient orbs -->
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
 
-    <!-- Centred content: mascot, title, buttons -->
+    <!-- Centred content -->
     <div class="hero-content">
 
-      <!-- Hero Mascot Removed -->
+      <div class="hero-eyebrow">The Blockh3ads Universe</div>
 
-      <h2 class="hero-title">
-        <span class="hero-subtitle-words">Everybody Can Be </span>
-        <span class="colour-word">BLOCKH3AD</span>
-      </h2>
+      <h1 class="hero-title">
+        <span class="hero-subtitle-words">Everybody Can Be A</span>
+        <span class="colour-word">BL<span class="hero-o-wrapper"><img src="images/head1.png" alt="O"
+              id="heroOImage"></span>CKH3AD</span>
+      </h1>
 
-      <p class="hero-tagline">Vibrant · Focused · Unstoppable</p>
+      <p class="hero-tagline">Vibrant &middot; Focused &middot; Unstoppable</p>
 
       <div class="hero-buttons">
-        <a href="#videos" class="btn btn-dark">Watch Now ▶</a>
-        <a href="#work-with-us" class="btn btn-pink">Work With Us </a>
+        <a href="#videos" class="hero-btn-primary">Watch Now &#9654;</a>
+        <a href="#work-with-us" class="hero-btn-secondary">Work With Us</a>
       </div>
 
+    </div>
+
+    <!-- Scroll nudge -->
+    <div class="hero-scroll-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M12 5v14M5 12l7 7 7-7" />
+      </svg>
+      Scroll
     </div>
 
   </section>
@@ -1836,15 +2094,20 @@
        MARQUEE BANNER — overlays hero bottom + about top
        ✏️ Edit data-blend-mode & data-color to control blend effect
   ============================================= -->
-  <div class="marquee-banner" data-blend-mode="color-dodge" data-color="rgba(200, 200, 200, 0.8)">
+  <div class="marquee-banner" data-blend-mode="exclusion" data-color="rgba(240, 240, 240, 0.8)">
     <div class="marquee-track" id="marqueeTrack">
-
-
-      <div class="marquee-item">a blockhead is someone who is<span class="star-dot">-</span></div>
-      <div class="marquee-item">focused · BOLD · STRANGE · unstoppable <span class="star-dot">-</span></div>
-      <!-- Duplicate set for seamless loop -->
-      <div class="marquee-item">a blockhead is someone who<span class="star-dot">-</span></div>
-      <div class="marquee-item">COLOURFUL · BOLD · STRANGE <span class="star-dot">-</span></div>
+      <div class="marquee-item">EVERYBODY CAN BE A BLOCKH3AD <span class="star-dot">✦</span> FOCUSED <span
+          class="star-dot">✦</span> BOLD <span class="star-dot">✦</span> STRANGE <span class="star-dot">✦</span>
+        UNSTOPPABLE <span class="star-dot">✦</span></div>
+      <div class="marquee-item">EVERYBODY CAN BE A BLOCKH3AD <span class="star-dot">✦</span> FOCUSED <span
+          class="star-dot">✦</span> BOLD <span class="star-dot">✦</span> STRANGE <span class="star-dot">✦</span>
+        UNSTOPPABLE <span class="star-dot">✦</span></div>
+      <div class="marquee-item">EVERYBODY CAN BE A BLOCKH3AD <span class="star-dot">✦</span> FOCUSED <span
+          class="star-dot">✦</span> BOLD <span class="star-dot">✦</span> STRANGE <span class="star-dot">✦</span>
+        UNSTOPPABLE <span class="star-dot">✦</span></div>
+      <div class="marquee-item">EVERYBODY CAN BE A BLOCKH3AD <span class="star-dot">✦</span> FOCUSED <span
+          class="star-dot">✦</span> BOLD <span class="star-dot">✦</span> STRANGE <span class="star-dot">✦</span>
+        UNSTOPPABLE <span class="star-dot">✦</span></div>
     </div>
   </div>
 
@@ -2207,10 +2470,11 @@
 
 
   <!-- =============================================
-       BRAND COLLABS SECTION
+       THE BLOCK LIST — COLLABS SECTION
   ============================================= -->
   <section class="collabs-section" id="collab">
-    <h2 class="section-title"> Friends We've BLOCKED With 🤝</h2>
+    <h2 class="section-title">THE BLOCK LIST</h2>
+    <p class="collabs-subtitle">Brands & creators we've linked up with</p>
     <div class="brand-logo-row">
       <div class="brand-badge">Slerg</div>
       <div class="brand-badge">TIL</div>
@@ -2228,7 +2492,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
         <h2 class="section-title" style="margin-bottom: 0;"> The Shop 🛍️</h2>
         <a href="https://wa.me/2349076007188" target="_blank" class="btn btn-dark"
-          style="font-size: 1rem; padding: 0.6rem 1.2rem; border-radius: 50px;">Courses 📚</a>
+          style="font-size: 1rem; padding: 0.6rem 2rem; border-radius: 7px;">Courses 📚</a>
       </div>
 
       <!-- 3 products: facecap, t-shirt, mug -->
@@ -2288,68 +2552,57 @@
       <div class="services-grid">
 
         <div class="service-card">
-          <div class="service-icon">🎬</div>
+          <div class="service-icon-wrapper">🎬</div>
           <h3>Animated Content</h3>
           <p>Original short-form animated videos for TikTok, Reels, and Shorts — built to stop the scroll.</p>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🤝</div>
+          <div class="service-icon-wrapper">🤝</div>
           <h3>Brand Collaborations</h3>
           <p>We embed your brand inside our world in a way that feels native, funny, and actually watchable. No forced
             ads.</p>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🎨</div>
+          <div class="service-icon-wrapper">🎨</div>
           <h3>Character Design</h3>
           <p>Custom BLOCKH3ADS-style characters for brands, campaigns, or personal IP — bold, blocky, unmistakably
             weird.</p>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">📦</div>
+          <div class="service-icon-wrapper">📦</div>
           <h3>Merch & Product Design</h3>
           <p>From concept to drop-ready — we design limited merch your audience actually wants to wear and collect.</p>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">📣</div>
+          <div class="service-icon-wrapper">📣</div>
           <h3>Social Strategy</h3>
           <p>Character-led content strategies that grow real, engaged communities across platforms.</p>
         </div>
 
         <div class="service-card">
-          <div class="service-icon">🌍</div>
+          <div class="service-icon-wrapper">🌍</div>
           <h3>Licensing & IP</h3>
           <p>License the BLOCKH3ADS universe for your product, event, or platform. Let the weirdness work for you.</p>
         </div>
 
       </div>
 
-      <!-- Contact CTA — sits below the services -->
-      <div class="work-cta-row">
+      <!-- Minimalist Contact CTA -->
+      <div class="work-cta-card">
+        <span class="section-label">- Collaborate -</span>
+        <h3>Let's Build Something Weird</h3>
+        <p class="cta-desc">Whether you're a startup, a global brand, or a fellow creator — if it's bold, we're in. Drop
+          us a line and let's make it happen.</p>
 
-        <div class="work-text-block">
-          <span class="section-label">- Let's Build Something</span>
-          <p>Whether you're a startup, a global brand, or a fellow creator — if it's bold, we're in.</p>
-          <div class="work-perks">
-            <div class="perk">✅ Fast turnaround</div>
-            <div class="perk">✅ 100M+ combined reach</div>
-            <div class="perk">✅ Custom packages available</div>
-            <div class="perk">✅ We actually reply to emails</div>
-          </div>
+        <div class="cta-button-group">
+          <a href="mailto:blockheadscontent@gmail.com" class="cta-btn cta-btn-primary">📩 Email Us</a>
+          <a href="tel:+2349076007188" class="cta-btn cta-btn-secondary">📞 Call Us</a>
+          <a href="#social" class="cta-btn cta-btn-secondary">🔗 Find Us Online</a>
         </div>
-
-        <div class="work-cta-box">
-          <p class="cta-eyebrow">Ready to get weird?</p>
-          <h3>Let's Talk</h3>
-          <p class="cta-sub">Drop us a message and we'll get back to you within 48 hours.</p>
-          <a href="mailto:blockheadscontent@gmail.com" class="btn btn-yellow">📩 Email Us</a>
-          <a href="#social" class="btn btn-pink">Find Us Online</a>
-          <a href="tel:+2349076007188" class="btn btn-lemon"> +234 9076007188</a>
-        </div>
-
       </div>
 
     </div>
@@ -2399,8 +2652,7 @@
        FOOTER
   ============================================= -->
   <footer class="site-footer">
-    <span class="footer-logo">BLOCKH3ADs</span>
-    <p>© 2026 BLOCKH3ADS · Made with joy, chaos, and too much Zobo</p>
+    <p>Terms & Conditions <br> <br>All rights reserved. Copyright © 2026</p>
   </footer>
 
 
@@ -2460,7 +2712,7 @@
 
     // Make the cursor grow when hovering over clickable elements
     const clickableElements = document.querySelectorAll(
-      'a, button, .merch-card, .video-card, .brand-badge'
+      'a, button, .merch-card, .video-card, .brand-badge, .service-card'
     );
 
     clickableElements.forEach(function (element) {
@@ -2510,24 +2762,6 @@
       });
     }
 
-    // Creates 18 emoji elements that slowly float up the screen.
-    const emojiContainer = document.getElementById('floatingEmojis');
-    const emojiList = ['🟦', '🔶', '🔠', '🎲', '🧩', '🏳️‍🌈', '📦', '🎶', '🧊'];
-
-    for (let i = 0; i < 18; i++) {
-      const emoji = document.createElement('div');
-      emoji.className = 'floating-emoji';
-      emoji.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
-
-      // Randomise position and speed so they don't all move together
-      emoji.style.left = (Math.random() * 100) + 'vw';
-      emoji.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
-      emoji.style.animationDuration = (8 + Math.random() * 12) + 's';
-      emoji.style.animationDelay = (Math.random() * 15) + 's';
-
-      emojiContainer.appendChild(emoji);
-    }
-
     // ----- Scroll Parallax for Team Cards -----
     const handleTeamScroll = () => {
       const teamSection = document.querySelector('.team-section');
@@ -2552,6 +2786,33 @@
     };
     window.addEventListener('scroll', handleTeamScroll);
     handleTeamScroll(); // Trigger once on load in case already scrolled
+
+    // ----- Cycle character heads in place of 'O' in BLOCKH3AD -----
+    const oImage = document.getElementById('heroOImage');
+    if (oImage) {
+      const heads = [
+        'images/head1.png',
+        'images/head2.png',
+        'images/head3.png',
+        'images/head4.png',
+        'images/head5.png',
+        'images/head6.png',
+        'images/head7.png'
+      ];
+      let currentHeadIndex = 0;
+
+      setInterval(() => {
+        oImage.style.opacity = '0';
+        oImage.style.transform = 'scale(0.7) rotate(-15deg)';
+
+        setTimeout(() => {
+          currentHeadIndex = (currentHeadIndex + 1) % heads.length;
+          oImage.src = heads[currentHeadIndex];
+          oImage.style.opacity = '1';
+          oImage.style.transform = 'scale(1) rotate(0deg)';
+        }, 250);
+      }, 1600);
+    }
 
   </script>
 
