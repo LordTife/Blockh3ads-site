@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLOCKH3ADS who is a blockhead? </title>
+  <title>BLOCKH3ADS animation studio </title>
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="any">
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="192x192">
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="512x512">
@@ -45,7 +45,7 @@
       --green: #15510d;
       --lemon: #00FF8E;
       --red: #f90000;
-      --purple: #5d35ee;
+      --purple: #6b47f0;
       --black: #0a0410;
       --gold: #bcc41c;
     }
@@ -277,7 +277,7 @@
       font-weight: 700;
       letter-spacing: 4px;
       text-transform: lowercase;
-      color: var(--lemon);
+      color: var(--sec-purple);
       margin-bottom: 1.5rem;
       opacity: 0.4
     }
@@ -288,7 +288,7 @@
       display: block;
       width: 30px;
       height: 1px;
-      background: var(--lemon);
+      background: var(--sec-purple);
       opacity: 0.6;
     }
 
@@ -531,15 +531,16 @@
       */
       height: 3rem;
       margin-top: -1.5rem;
-      margin-bottom: -1.5rem;
+      margin-bottom: -2.5rem;
+      padding-bottom: 1.5rem;
       position: relative;
       z-index: 10;
       pointer-events: none;
       overflow: hidden;
       /* Pull the banner up so it visually centers between hero & about */
       transform: translateY(-2rem);
-      /* Apply mix-blend-mode to the banner itself so it blends with the page behind it */
-      mix-blend-mode: exclusion;
+      /* Apply mix-blend-mode to the banner itself so it blends with the page behind it
+      mix-blend-mode: none*/
     }
 
     .marquee-track {
@@ -551,14 +552,14 @@
     .marquee-item {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: 1.8rem;
+      font-size: 1.2rem;
       letter-spacing: 2px;
       white-space: nowrap;
-      padding: 0.5rem 1.5rem;
       line-height: 1.2;
-      color: var(--purple);
-      opacity: 0.1;
+      color: rgba(56, 7, 104, 0.6);
       text-transform: uppercase;
+      transform: translateY(65%);
+       opacity: 0.5;
     }
 
     .marquee-item .star-dot {
@@ -1806,7 +1807,8 @@
     ============================================= */
     .team-section {
       background: var(--white);
-      padding: 1rem 7em 5em
+      padding: 1rem 7em 5em;
+      padding-bottom: 6rem;
     }
 
     .team-section .section-title {
@@ -1900,6 +1902,8 @@
       background: var(--pink);
       padding: 5rem 3rem;
       text-align: center;
+      padding-top: 9rem;
+     
     }
 
     .social-section h2 {
@@ -1963,6 +1967,11 @@
     .social-btn.snapchat {
       color: #FFFC00;
       text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+    }
+
+     .social-btn.X {
+      color: #000000;
+      text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
     }
 
     /* =============================================
@@ -2648,6 +2657,7 @@
       <a class="social-btn youtube" href="https://youtube.com/@blockh3ads?si=zbKJB6pnXZQIjso2">YouTube</a>
       <a class="social-btn facebook" href="https://www.facebook.com/share/1YWQw3JGRE/">Facebook</a>
       <a class="social-btn snapchat" href="https://www.snapchat.com/add/blockh3ads">Snapchat</a>
+      <a class="social-btn X" href="https://x.com/the_Blockh3ads">X</a>
     </div>
   </section>
 
