@@ -107,7 +107,9 @@
       /* cursor can't accidentally block clicks */
       z-index: 9999;
       transition: transform 0.1s ease, background 0.2s ease;
-      mix-blend-mode: color-dodge;
+      mix-blend-mode: exclusion;
+      opacity: 0.8;
+       /* makes the cursor invert colors when over content for better visibility */
     }
 
     /* When hovering a link/button, cursor turns blue */
