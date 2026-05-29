@@ -3,18 +3,44 @@
 
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N033FHFSTF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N033FHFSTF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-N033FHFSTF');
-</script>
+    gtag('config', 'G-N033FHFSTF');
+  </script>
   <meta name="facebook-domain-verification" content="onr7sgybl2xtohsxsmlvu5092kxcyh" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BLOCKH3ADS animation studio </title>
+
+  <!-- Brand / Organization Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "BLOCKH3ADS",
+    "url": "https://blockh3ads.com",
+    "logo": "https://blockh3ads.com/images/logo.svg",
+    "description": "BLOCKH3ADS is an animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.",
+    "founder": {
+      "@type": "Person",
+      "name": "Boluwatife Abatan",
+      "jobTitle": "Founder & Creative Director"
+    },
+    "sameAs": [
+      "https://www.tiktok.com/@blockh3ads",
+      "https://www.instagram.com/the_blockh3ads",
+      "https://youtube.com/@blockh3ads",
+      "https://www.facebook.com/share/1YWQw3JGRE/",
+      "https://www.snapchat.com/add/blockh3ads",
+      "https://x.com/the_Blockh3ads"
+    ]
+  }
+  </script>
+
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="any">
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="192x192">
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="512x512">
@@ -119,7 +145,7 @@
       transition: transform 0.1s ease, background 0.2s ease;
       mix-blend-mode: exclusion;
       opacity: 0.8;
-       /* makes the cursor invert colors when over content for better visibility */
+      /* makes the cursor invert colors when over content for better visibility */
     }
 
     /* When hovering a link/button, cursor turns blue */
@@ -310,9 +336,9 @@
       color: #ffffff;
       letter-spacing: 1px;
       margin-bottom: 1.2rem;
-      position: relative; 
+      position: relative;
       flex-wrap: nowrap;
-      
+
     }
 
     /* "Everybody Can Be" subtitle */
@@ -570,7 +596,7 @@
       color: rgba(56, 7, 104, 0.6);
       text-transform: uppercase;
       transform: translateY(65%);
-       opacity: 0.5;
+      opacity: 0.5;
     }
 
     .marquee-item .star-dot {
@@ -1914,7 +1940,7 @@
       padding: 5rem 3rem;
       text-align: center;
       padding-top: 9rem;
-     
+
     }
 
     .social-section h2 {
@@ -1934,7 +1960,7 @@
       align-items: center;
       flex-wrap: wrap;
       width: 100%;
-     
+
     }
 
     .social-btn {
@@ -1980,7 +2006,7 @@
       text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
     }
 
-     .social-btn.X {
+    .social-btn.X {
       color: #000000;
       text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
     }
@@ -2202,8 +2228,7 @@
               2. Save it as e.g. "videos/video1.mp4"
               3. Update the src below
             -->
-            <video class="local-video" autoplay loop muted playsinline id="vid1">
-              <source src="videos/video1.mp4" type="video/mp4">
+            <video class="local-video" autoplay loop muted playsinline id="vid1" data-src="videos/video1.mp4">
               Your browser does not support the video tag.
             </video>
             <div class="play-overlay">▶</div>
@@ -2274,8 +2299,7 @@
         <!-- Video Card 2 -->
         <div class="video-card">
           <a href="https://www.instagram.com/reels/DYNHWJ_ovXq/" target="_blank" class="video-link-wrapper">
-            <video class="local-video" autoplay loop muted playsinline id="vid2">
-              <source src="videos/video2.mp4" type="video/mp4">
+            <video class="local-video" autoplay loop muted playsinline id="vid2" data-src="videos/video2.mp4">
               Your browser does not support the video tag.
             </video>
             <div class="play-overlay">▶</div>
@@ -2346,8 +2370,7 @@
         <!-- Video Card 3 -->
         <div class="video-card">
           <a href="https://www.facebook.com/share/r/18k3cxZzUP/" target="_blank" class="video-link-wrapper">
-            <video class="local-video" autoplay loop muted playsinline id="vid3">
-              <source src="videos/video3.mp4" type="video/mp4">
+            <video class="local-video" autoplay loop muted playsinline id="vid3" data-src="videos/video3.mp4">
               Your browser does not support the video tag.
             </video>
             <div class="play-overlay">▶</div>
@@ -2419,8 +2442,7 @@
         <div class="video-card">
           <a href="https://youtube.com/shorts/h1VelqGw68g?si=389zm8f4DUQhUuN3" target="_blank"
             class="video-link-wrapper">
-            <video class="local-video" autoplay loop muted playsinline id="vid4">
-              <source src="videos/video4.mp4" type="video/mp4">
+            <video class="local-video" autoplay loop muted playsinline id="vid4" data-src="videos/video4.mp4">
               Your browser does not support the video tag.
             </video>
             <div class="play-overlay">▶</div>
@@ -2837,15 +2859,27 @@
           oImage.style.transform = 'scale(1) rotate(0deg)';
         }, 250);
       }, 1600);
-        
-    //<!--3D animation studio, 2D animation services, 
-     // Motion graphics design, VFX and visual effects, 
-     // Explainer video production, Whiteboard animation,
+
+      //<!--3D animation studio, 2D animation services, 
+      // Motion graphics design, VFX and visual effects, 
+      // Explainer video production, Whiteboard animation,
       // Corporate video animation, Medical animation studio,
-       // Architectural 3D rendering, Character, animation studio, 
-       // Animation agency-->
+      // Architectural 3D rendering, Character, animation studio, 
+      // Animation agency-->
     }
-  
+
+    // Load background videos dynamically after DOMContentLoaded 
+    // to prevent Google Search Console from indexing them and generating "Video isn't on a watch page" warnings.
+    document.addEventListener("DOMContentLoaded", function () {
+      const lazyVideos = Array.from(document.querySelectorAll("video.local-video"));
+      lazyVideos.forEach(function (video) {
+        if (video.dataset.src) {
+          video.src = video.dataset.src;
+          video.load();
+        }
+      });
+    });
+
 
   </script>
 
