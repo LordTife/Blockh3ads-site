@@ -103,7 +103,39 @@
       --purple: #6b47f0;
       --black: #0a0410;
       --gold: #bcc41c;
+
+      /* =============================================
+         HAMBURGER MENU TOGGLE CONFIGURATION
+         Easily customize the size, spacing, thickness,
+         colors, and animation of the mobile menu toggle.
+      ============================================= */
+      --toggle-btn-size: 44px;
+      /* Size (width & height) of the toggle button */
+      --toggle-btn-bg: var(--white);
+      /* Background color of the button */
+      --toggle-btn-bg-active: var(--sec-purple);
+      /* Background color of the button when open */
+      --toggle-btn-radius: 50%;
+      /* Border radius of the button (50% for circle) */
+      --toggle-btn-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      /* Shadow under the button */
+      --toggle-btn-scale: 1.29;
+      /* Scale factor for the button size */
+
+      --toggle-stroke-width: 20px;
+      /* Width of each bar inside the hamburger */
+      --toggle-stroke-height: 2px;
+      /* Thickness of each bar */
+      --toggle-stroke-gap: 4px;
+      /* Vertical gap/spacing between the bars */
+      --toggle-stroke-radius: 99px;
+      /* Rounded corners of the bars (pills) */
+      --toggle-stroke-color: var(--sec-purple);
+      /* Color of the bars */
+      --toggle-stroke-color-active: var(--white);
+      /* Color of the bars when active (X state) */
     }
+
 
     /* Load local Maximum Voltage webfont (place files in /fonts/) */
     @font-face {
@@ -214,6 +246,7 @@
 
     .navbar-logo img {
       height: clamp(100px, 7vw, 150px);
+      translate: calc(-25px);
       transform: scale(1.4);
       width: clamp(100px, 7vw, 150px);
       object-fit: contain;
@@ -252,32 +285,69 @@
 
     /* =============================================
        MOBILE NAVIGATION TOGGLE BUTTON
+       Styled using the variables defined in :root.
+       Hidden on desktop and displayed on mobile screens.
     ============================================= */
     .menu-toggle {
       display: none;
+      /* Hidden on desktop */
       flex-direction: column;
-      justify-content: space-between;
-      color: var(--black);
-      width: 44px;
-      height: 44px;
-      transform: scale(1.4);
-      background: var(--white);
+      justify-content: center;
+      align-items: center;
+      gap: var(--toggle-stroke-gap);
+      width: var(--toggle-btn-size);
+      height: var(--toggle-btn-size);
+      background-color: var(--toggle-btn-bg);
       border: none;
       cursor: pointer;
       z-index: 101;
-      padding: 10px 9px;
-      border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      border-radius: var(--toggle-btn-radius);
+      box-shadow: var(--toggle-btn-shadow);
+      transform: scale(var(--toggle-btn-scale));
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .menu-toggle:hover {
+      transform: scale(calc(var(--toggle-btn-scale) * 1.08));
+    }
+
+    .menu-toggle:active {
+      transform: scale(calc(var(--toggle-btn-scale) * 0.95));
+    }
+
+    .menu-toggle.is-active {
+      background-color: var(--toggle-btn-bg-active);
+      box-shadow: none;
     }
 
     .menu-toggle .bar {
-      width: 100%;
-      height: 4px;
-      transform: scale(1.3);
-      background-color: var(--white);
-      border-radius: 20px;
-      transition: all 0.3s ease-in-out;
+      display: block;
+      width: var(--toggle-stroke-width);
+      height: var(--toggle-stroke-height);
+      background-color: var(--toggle-stroke-color);
+      border-radius: var(--toggle-stroke-radius);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
+
+    /* Active state transformations (generating the "X") */
+    .menu-toggle.is-active .bar {
+      background-color: var(--toggle-stroke-color-active);
+    }
+
+    /* Mathematically align and cross the lines at the absolute center */
+    .menu-toggle.is-active .bar:nth-child(1) {
+      transform: translateY(calc(var(--toggle-stroke-height) + var(--toggle-stroke-gap))) rotate(45deg);
+    }
+
+    .menu-toggle.is-active .bar:nth-child(2) {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .menu-toggle.is-active .bar:nth-child(3) {
+      transform: translateY(calc(-1 * (var(--toggle-stroke-height) + var(--toggle-stroke-gap)))) rotate(-45deg);
+    }
+
 
     /* =============================================
        HERO SECTION — Premium dark immersive design
@@ -1529,32 +1599,8 @@
       /* Navigation Menu Drawer & Hamburger Toggle */
       .menu-toggle {
         display: flex !important;
-        width: 44px;
-        height: 44px;
-        background: var(--white);
-        border: none;
-        padding: 10px;
-        box-shadow: none;
-        border-radius: 18%;
       }
 
-      .menu-toggle .bar {
-        background-color: var(--sec-purple);
-      }
-
-      .menu-toggle.is-active .bar:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
-        background-color: var(--sec-purple);
-      }
-
-      .menu-toggle.is-active .bar:nth-child(2) {
-        opacity: 0;
-      }
-
-      .menu-toggle.is-active .bar:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg);
-        background-color: var(--sec-purple);
-      }
 
       .navbar {
         padding: 0.8rem 1.5rem;
