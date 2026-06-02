@@ -1,0 +1,10 @@
+# robots.txt for blockh3ads.com
+# Prevent Googlebot-Video and other video crawlers from indexing preview video assets.
+
+User-agent: Googlebot-Video
+Disallow: /videos/
+Disallow: /*.mp4$
+
+User-agent: *
+Disallow:
+Sitemap: https://blockh3ads.com/sitemap.xml

@@ -24,7 +24,7 @@
   <meta property="og:title" content="BLOCKH3ADS | 3D Animation Studio & Creative Brand">
   <meta property="og:description"
     content="BLOCKH3ADS is an animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.">
-  <meta property="og:image" content="https://blockh3ads.com/images/logo.svg">
+  <meta property="og:image" content="https://blockh3ads.com/images/Logo.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
@@ -32,7 +32,7 @@
   <meta property="twitter:title" content="BLOCKH3ADS | 3D Animation Studio & Creative Brand">
   <meta property="twitter:description"
     content="BLOCKH3ADS is an animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.">
-  <meta property="twitter:image" content="https://blockh3ads.com/images/logo.svg">
+  <meta property="twitter:image" content="https://blockh3ads.com/images/Logo.png">
 
 
   <!-- Brand / Organization Schema Markup -->
@@ -42,7 +42,7 @@
     "@type": "Organization",
     "name": "BLOCKH3ADS",
     "url": "https://blockh3ads.com",
-    "logo": "https://blockh3ads.com/images/logo.svg",
+    "logo": "https://blockh3ads.com/images/Logo.png",
     "description": "BLOCKH3ADS is an animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.",
     "founder": {
       "@type": "Person",
@@ -60,10 +60,13 @@
   }
   </script>
 
-  <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="192x192">
-  <link rel="icon" type="image/svg+xml" href="images/logo.svg" sizes="512x512">
-  <link rel="apple-touch-icon" href="images/logo.svg">
+  <!-- Favicon: PNG is required for Google Search to recognise and display your site's icon.
+       All hrefs use absolute URLs so search engine crawlers can always resolve the file. -->
+  <link rel="icon" type="image/png" href="https://blockh3ads.com/images/favicon.png">
+  <link rel="shortcut icon" type="image/png" href="https://blockh3ads.com/images/favicon.png">
+  <!-- SVG fallback for modern browsers -->
+  <link rel="icon" type="image/svg+xml" href="https://blockh3ads.com/images/logo.svg">
+  <link rel="apple-touch-icon" href="https://blockh3ads.com/images/favicon.png">
 
   <!--
     Google Fonts:
@@ -2937,17 +2940,31 @@
       // Animation agency-->
     }
 
-    // Load background videos dynamically after DOMContentLoaded 
-    // to prevent Google Search Console from indexing them and generating "Video isn't on a watch page" warnings.
-    document.addEventListener("DOMContentLoaded", function () {
-      const lazyVideos = Array.from(document.querySelectorAll("video.local-video"));
-      lazyVideos.forEach(function (video) {
-        if (video.dataset.src) {
-          video.src = video.dataset.src;
-          video.load();
-        }
+    // Load background videos dynamically on first user interaction (scroll, touch, mouse move, key down)
+    // to prevent search engine bots (like Googlebot) from detecting and indexing them.
+    // This avoids generating "Video isn't on a watch page" warnings in Search Console.
+    (function() {
+      const interactionEvents = ['mousemove', 'touchstart', 'scroll', 'keydown'];
+      
+      function loadVideos() {
+        const lazyVideos = document.querySelectorAll("video.local-video");
+        lazyVideos.forEach(function (video) {
+          if (video.dataset.src && !video.src) {
+            video.src = video.dataset.src;
+            video.load();
+          }
+        });
+        
+        // Clean up event listeners after loading once
+        interactionEvents.forEach(function(event) {
+          document.removeEventListener(event, loadVideos);
+        });
+      }
+
+      interactionEvents.forEach(function(event) {
+        document.addEventListener(event, loadVideos, { passive: true, once: true });
       });
-    });
+    })();
 
 
   </script>
