@@ -37,27 +37,62 @@
   <meta property="twitter:image" content="https://blockh3ads.com/images/Logo.png">
 
 
-  <!-- Brand / Organization Schema Markup -->
+  <!-- Brand & Organization Schema Markup (JSON-LD) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "BLOCKH3ADS",
-    "url": "https://blockh3ads.com",
-    "logo": "https://blockh3ads.com/images/Logo.png",
-    "description": "BLOCKH3ADS is an animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.",
-    "founder": {
-      "@type": "Person",
-      "name": "Boluwatife Abatan",
-      "jobTitle": "Founder & Creative Director"
-    },
-    "sameAs": [
-      "https://www.tiktok.com/@blockh3ads",
-      "https://www.instagram.com/the_blockh3ads",
-      "https://youtube.com/@blockh3ads",
-      "https://www.facebook.com/share/1YWQw3JGRE/",
-      "https://www.snapchat.com/add/blockh3ads",
-      "https://x.com/the_Blockh3ads"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://blockh3ads.com/#organization",
+        "name": "BLOCKH3ADS",
+        "alternateName": "Blockheads",
+        "url": "https://blockh3ads.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://blockh3ads.com/images/Logo.png",
+          "caption": "BLOCKH3ADS Logo"
+        },
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://blockh3ads.com/images/Logo.png"
+        },
+        "description": "BLOCKH3ADS is a 3D animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.",
+        "email": "blockheadscontent@gmail.com",
+        "telephone": "+2349076007188",
+        "founder": {
+          "@type": "Person",
+          "name": "Boluwatife Abatan",
+          "jobTitle": "Founder & Creative Director",
+          "url": "https://blockh3ads.com/#team"
+        },
+        "sameAs": [
+          "https://www.tiktok.com/@blockh3ads",
+          "https://www.instagram.com/the_blockh3ads",
+          "https://www.youtube.com/@blockh3ads",
+          "https://www.facebook.com/share/1YWQw3JGRE/",
+          "https://www.snapchat.com/add/blockh3ads",
+          "https://x.com/the_Blockh3ads"
+        ]
+      },
+      {
+        "@type": "Brand",
+        "@id": "https://blockh3ads.com/#brand",
+        "name": "BLOCKH3ADS",
+        "alternateName": "Blockheads",
+        "url": "https://blockh3ads.com",
+        "logo": "https://blockh3ads.com/images/Logo.png",
+        "description": "A vibrant, focused, and wonderfully weird 3D animation studio and creative universe brand.",
+        "slogan": "Everybody Can Be A BLOCKH3AD",
+        "sameAs": [
+          "https://www.tiktok.com/@blockh3ads",
+          "https://www.instagram.com/the_blockh3ads",
+          "https://www.youtube.com/@blockh3ads",
+          "https://www.facebook.com/share/1YWQw3JGRE/",
+          "https://www.snapchat.com/add/blockh3ads",
+          "https://x.com/the_Blockh3ads"
+        ]
+      }
     ]
   }
   </script>
