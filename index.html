@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- adsense tag (AdSense code snippet) -->
+  <!-- adsense tag (AdSense code snippet) -->
   <meta name="google-adsense-account" content="ca-pub-8211232147030586">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N033FHFSTF"></script>
@@ -2778,7 +2778,7 @@
           <img src="images/tife.jpg" alt="Tife">
         </div>
         <div class="team-details">
-          <h3 class="team-name"><!--Abatan--> Tife</h3>
+          <h3 class="team-name"><!--Abatan-->ABATAN Tife 🐻</h3>
           <p class="team-role">Founder &amp; Creative Director</p>
         </div>
       </div>
@@ -2980,9 +2980,9 @@
     // Load background videos dynamically on first user interaction (scroll, touch, mouse move, key down)
     // to prevent search engine bots (like Googlebot) from detecting and indexing them.
     // This avoids generating "Video isn't on a watch page" warnings in Search Console.
-    (function() {
+    (function () {
       const interactionEvents = ['mousemove', 'touchstart', 'scroll', 'keydown'];
-      
+
       function loadVideos() {
         const lazyVideos = document.querySelectorAll("video.local-video");
         lazyVideos.forEach(function (video) {
@@ -2991,14 +2991,14 @@
             video.load();
           }
         });
-        
+
         // Clean up event listeners after loading once
-        interactionEvents.forEach(function(event) {
+        interactionEvents.forEach(function (event) {
           document.removeEventListener(event, loadVideos);
         });
       }
 
-      interactionEvents.forEach(function(event) {
+      interactionEvents.forEach(function (event) {
         document.addEventListener(event, loadVideos, { passive: true, once: true });
       });
     })();
