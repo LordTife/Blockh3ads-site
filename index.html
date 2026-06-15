@@ -2314,7 +2314,10 @@
           <div class="character-frame">
             <div class="character-circle" id="characterCircle">
               <!-- ABOUT SECTION IMAGE: swap src to change the character image -->
-              <img src="images/familia.png" alt="BLOCKH3ADS character" id="characterCircleImage">
+              <picture>
+                <source srcset="images/familia.webp" type="image/webp">
+                <img src="images/familia.png" alt="BLOCKH3ADS character" id="characterCircleImage" loading="lazy" decoding="async" width="640" height="640">
+              </picture>
             </div>
           </div>
         </div>
