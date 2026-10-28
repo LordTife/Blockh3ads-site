@@ -37,38 +37,115 @@
   <meta property="twitter:image" content="https://blockh3ads.com/images/Logo.png">
 
 
-  <!-- Brand & Organization Schema Markup (JSON-LD) -->
+  <!-- =============================================
+       STRUCTURED DATA — Knowledge Panel Optimised
+       Single @graph with cross-linked entities:
+       WebSite → Organization → Person (Founder)
+       Brand, WebPage, CreativeWork (Mascot)
+  ============================================= -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
+
+      /* ── WebSite ────────────────────────────────── */
       {
-        "@type": ["Organization", "AnimationStudio", "Brand"],
+        "@type": "WebSite",
+        "@id": "https://blockh3ads.com/#website",
+        "name": "BLOCKH3ADS",
+        "alternateName": "Blockheads",
+        "url": "https://blockh3ads.com",
+        "publisher": { "@id": "https://blockh3ads.com/#organization" },
+        "inLanguage": "en",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://blockh3ads.com/?s={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      },
+
+      /* ── WebPage (Homepage) ─────────────────────── */
+      {
+        "@type": "WebPage",
+        "@id": "https://blockh3ads.com/#webpage",
+        "url": "https://blockh3ads.com",
+        "name": "BLOCKH3ADS | 3D Animation Studio \u0026 Creative Brand",
+        "description": "BLOCKH3ADS is an animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.",
+        "isPartOf": { "@id": "https://blockh3ads.com/#website" },
+        "about": { "@id": "https://blockh3ads.com/#organization" },
+        "inLanguage": "en",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "@id": "https://blockh3ads.com/#primaryimage",
+          "url": "https://blockh3ads.com/images/Logo.png"
+        }
+      },
+
+      /* ── Organization ───────────────────────────── */
+      {
+        "@type": "Organization",
         "@id": "https://blockh3ads.com/#organization",
         "name": "BLOCKH3ADS",
         "legalName": "THE BLOCKHEADS LTD",
-        "alternateName": "Blockheads",
+        "alternateName": ["Blockheads", "BLOCKH3ADS Studio", "THE BLOCKHEADS LTD"],
         "url": "https://blockh3ads.com",
         "logo": {
           "@type": "ImageObject",
+          "@id": "https://blockh3ads.com/#logo",
           "url": "https://blockh3ads.com/images/Logo.png",
-          "caption": "BLOCKH3ADS Logo"
+          "contentUrl": "https://blockh3ads.com/images/Logo.png",
+          "caption": "BLOCKH3ADS Logo",
+          "width": "512",
+          "height": "512"
         },
         "image": {
           "@type": "ImageObject",
           "url": "https://blockh3ads.com/images/Logo.png"
         },
-        "description": "BLOCKH3ADS is a 3D animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.",
+        "description": "BLOCKH3ADS is a 3D animation studio and creative brand creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content. Registered as THE BLOCKHEADS LTD.",
+        "slogan": "Everybody Can Be A BLOCKH3AD",
+        "foundingDate": "2025",
+        "founder": { "@id": "https://blockh3ads.com/#founder" },
         "email": "hello@blockh3ads.com",
         "telephone": "+2349076007188",
-        "founder": {
-          "@type": "Person",
-          "name": "Boluwatife Abatan",
-          "jobTitle": "Founder & Creative Director",
-          "url": "https://blockh3ads.com/#team"
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Ogun",
+          "addressCountry": "NG"
         },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+2349076007188",
+            "contactType": "customer support",
+            "email": "hello@blockh3ads.com",
+            "areaServed": "Worldwide",
+            "availableLanguage": ["English"]
+          }
+        ],
+        "areaServed": "Worldwide",
+        "numberOfEmployees": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 10
+        },
+        "knowsAbout": [
+          "3D Animation",
+          "Character Design",
+          "Short-form Animation",
+          "Motion Graphics",
+          "Brand Design",
+          "Creative Content",
+          "Merchandise Design",
+          "Social Media Content"
+        ],
+        "brand": { "@id": "https://blockh3ads.com/#brand" },
         "sameAs": [
           "https://www.wikidata.org/wiki/Q140254708",
+          "https://www.linkedin.com/company/blockh3ads",
           "https://www.tiktok.com/@blockh3ads",
           "https://www.instagram.com/the_blockh3ads",
           "https://www.youtube.com/@blockh3ads",
@@ -77,6 +154,8 @@
           "https://x.com/the_Blockh3ads"
         ]
       },
+
+      /* ── Brand ──────────────────────────────────── */
       {
         "@type": "Brand",
         "@id": "https://blockh3ads.com/#brand",
@@ -87,40 +166,37 @@
         "description": "A vibrant, focused, and wonderfully weird 3D animation studio and creative universe virtual brand.",
         "slogan": "Everybody Can Be A BLOCKH3AD",
         "sameAs": [
-          "https://www.wikidata.org/wiki/Q140254708",
-          "https://www.tiktok.com/@blockh3ads",
-          "https://www.instagram.com/the_blockh3ads",
-          "https://www.youtube.com/@blockh3ads",
-          "https://www.facebook.com/share/1YWQw3JGRE/",
-          "https://www.snapchat.com/add/blockh3ads",
-          "https://x.com/the_Blockh3ads"
+          "https://www.wikidata.org/wiki/Q140254708"
         ]
-      }
-    ]
-  }
-  </script>
+      },
 
-  <!-- Mascot Structured Data Schema (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": "BLOCKH3ADS Family Mascot",
-    "url": "https://blockh3ads.com",
-    "description": "The official mascot of the BLOCKH3ADS virtual brand, representing the BLOCKH3ADS family.",
-    "image": "https://blockh3ads.com/images/familia.png",
-    "fictionalCharacter": {
-      "@type": "Person",
-      "name": "BLOCKH3ADS Family",
-      "description": "The official mascot representing the BLOCKH3ADS virtual brand family, a crew of characters who are wonderfully stubborn about staying true to themselves.",
-      "image": "https://blockh3ads.com/images/familia.png"
-    },
-    "about": {
-      "@type": "Person",
-      "name": "BLOCKH3ADS Family",
-      "description": "The official mascot representing the BLOCKH3ADS virtual brand family, a crew of characters who are wonderfully stubborn about staying true to themselves.",
-      "image": "https://blockh3ads.com/images/familia.png"
-    }
+      /* ── Founder ────────────────────────────────── */
+      {
+        "@type": "Person",
+        "@id": "https://blockh3ads.com/#founder",
+        "name": "Boluwatife Abatan",
+        "givenName": "Boluwatife",
+        "familyName": "Abatan",
+        "jobTitle": "Founder \u0026 Creative Director",
+        "worksFor": { "@id": "https://blockh3ads.com/#organization" },
+        "url": "https://blockh3ads.com/#team",
+        "image": "https://blockh3ads.com/images/tife.jpg",
+        "knowsAbout": ["3D Animation", "Character Design", "Creative Direction"]
+      },
+
+      /* ── Mascot / Creative Work ─────────────────── */
+      {
+        "@type": "CreativeWork",
+        "@id": "https://blockh3ads.com/#mascot",
+        "name": "BLOCKH3ADS Family",
+        "url": "https://blockh3ads.com",
+        "description": "The official mascot family of the BLOCKH3ADS brand — a crew of characters who are wonderfully stubborn about staying true to themselves.",
+        "image": "https://blockh3ads.com/images/familia.png",
+        "creator": { "@id": "https://blockh3ads.com/#organization" },
+        "about": { "@id": "https://blockh3ads.com/#brand" }
+      }
+
+    ]
   }
   </script>
 
