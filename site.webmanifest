@@ -1,0 +1,22 @@
+{
+  "name": "BLOCKH3ADS | 3D Animation Studio & Creative Brand",
+  "short_name": "BLOCKH3ADS",
+  "description": "BLOCKH3ADS is an animation studio creating vibrant, focused, and wonderfully weird short-form animations, character designs, and creative content.",
+  "icons": [
+    {
+      "src": "/images/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#09002F",
+  "background_color": "#09002F",
+  "display": "standalone",
+  "start_url": "/"
+}
+
