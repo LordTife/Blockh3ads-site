@@ -1,0 +1,2065 @@
+/* =============================================
+       COLOUR PALETTE
+       These are the brand colours used everywhere.
+       Change them here and they update site-wide.
+    ============================================= */
+    :root {
+      /* Highlights & Light Shades */
+      /* --main-purple: #8570DC;*/
+      --main-purple: #c1b5f0;
+      --sec-purple: #09002F;
+      --bright-yellow: #43048b;
+      --yellow: var(--bright-yellow);
+      --white: #ffffff;
+      --pink: #fd89ff;
+      --blue: #74e6ff;
+      --orange: #ff8800;
+      --royal-blue: #3004f4;
+      --green: #15510d;
+      --lemon: #00FF8E;
+      --red: #f90000;
+      --purple: #6b47f0;
+      --black: #0a0410;
+      --gold: #bcc41c;
+
+      /* =============================================
+         HAMBURGER MENU TOGGLE CONFIGURATION
+         Easily customize the size, spacing, thickness,
+         colors, and animation of the mobile menu toggle.
+      ============================================= */
+      --toggle-btn-size: 44px;
+      /* Size (width & height) of the toggle button */
+      --toggle-btn-bg: var(--white);
+      /* Background color of the button */
+      --toggle-btn-bg-active: var(--sec-purple);
+      /* Background color of the button when open */
+      --toggle-btn-radius: 50%;
+      /* Border radius of the button (50% for circle) */
+      --toggle-btn-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      /* Shadow under the button */
+      --toggle-btn-scale: 1.29;
+      /* Scale factor for the button size */
+
+      --toggle-stroke-width: 20px;
+      /* Width of each bar inside the hamburger */
+      --toggle-stroke-height: 2px;
+      /* Thickness of each bar */
+      --toggle-stroke-gap: 4px;
+      /* Vertical gap/spacing between the bars */
+      --toggle-stroke-radius: 99px;
+      /* Rounded corners of the bars (pills) */
+      --toggle-stroke-color: var(--sec-purple);
+      /* Color of the bars */
+      --toggle-stroke-color-active: var(--white);
+      /* Color of the bars when active (X state) */
+    }
+
+
+    /* Load local Maximum Voltage webfont (place files in /fonts/) */
+    @font-face {
+      font-family: 'Maximum Voltage';
+      src: local('Maximum Voltage'),
+        url('../fonts/Maximum%20Voltage.otf') format('opentype'),
+        url('../fonts/Maximum%20Voltage.ttf') format('truetype'),
+        url('../fonts/MaximumVoltage.woff2') format('woff2'),
+        url('../fonts/MaximumVoltage.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* =============================================
+       GLOBAL RESET & BASE STYLES
+       Removes default browser spacing and sets
+       the base font and background colour.
+    ============================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      /* smooth scroll when clicking nav links */
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--purple);
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--black);
+      overflow-x: hidden;
+      /* prevents horizontal scrollbar */
+      cursor: none;
+      /* hides the default cursor (we use a custom one) */
+    }
+
+    /* =============================================
+       CUSTOM CURSOR
+       A small pink square that follows your mouse.
+       It grows when hovering over clickable things.
+    ============================================= */
+    .custom-cursor {
+      width: 24px;
+      height: 24px;
+      background: var(--pink);
+      border-radius: 5%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      /* cursor can't accidentally block clicks */
+      z-index: 9999;
+      transition: transform 0.1s ease, background 0.2s ease;
+      mix-blend-mode: exclusion;
+      opacity: 0.8;
+      /* makes the cursor invert colors when over content for better visibility */
+    }
+
+    /* When hovering a link/button, cursor turns blue */
+    .custom-cursor.is-hovering {
+      transform: scale(1.5);
+      background: var(--blue);
+    }
+
+    /* Hide custom cursor and restore standard cursor on touch/pointer-coarse devices */
+    @media (hover: none),
+    (pointer: coarse) {
+      .custom-cursor {
+        display: none !important;
+      }
+
+      body {
+        cursor: auto !important;
+      }
+
+      a,
+      button,
+      .merch-card,
+      .video-card,
+      .brand-badge {
+        cursor: pointer !important;
+      }
+    }
+
+    /* =============================================
+       NAVIGATION BAR
+       Fixed to the top of the screen at all times.
+    ============================================= */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 5rem;
+      background: transparent;
+    }
+
+
+
+    .navbar-logo img {
+      height: clamp(100px, 7vw, 150px);
+      translate: calc(-25px);
+      transform: scale(1.4);
+      width: clamp(100px, 7vw, 150px);
+      object-fit: contain;
+      transition: transform 0.2s ease;
+    }
+
+    .navbar-logo:hover img {
+      transform: scale(1.05);
+    }
+
+    .navbar-links {
+      display: flex;
+      background: rgb(255, 255, 255);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: .4rem;
+      transform: scale(1.3);
+    }
+
+    .navbar-links a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 1.5px;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      color: var(--purple);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .navbar-links a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    /* =============================================
+       MOBILE NAVIGATION TOGGLE BUTTON
+       Styled using the variables defined in :root.
+       Hidden on desktop and displayed on mobile screens.
+    ============================================= */
+    .menu-toggle {
+      display: none;
+      /* Hidden on desktop */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--toggle-stroke-gap);
+      width: var(--toggle-btn-size);
+      height: var(--toggle-btn-size);
+      background-color: var(--toggle-btn-bg);
+      border: none;
+      cursor: pointer;
+      z-index: 101;
+      border-radius: var(--toggle-btn-radius);
+      box-shadow: var(--toggle-btn-shadow);
+      transform: scale(var(--toggle-btn-scale));
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .menu-toggle:hover {
+      transform: scale(calc(var(--toggle-btn-scale) * 1.08));
+    }
+
+    .menu-toggle:active {
+      transform: scale(calc(var(--toggle-btn-scale) * 0.95));
+    }
+
+    .menu-toggle.is-active {
+      background-color: var(--toggle-btn-bg-active);
+      box-shadow: none;
+    }
+
+    .menu-toggle .bar {
+      display: block;
+      width: var(--toggle-stroke-width);
+      height: var(--toggle-stroke-height);
+      background-color: var(--toggle-stroke-color);
+      border-radius: var(--toggle-stroke-radius);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Active state transformations (generating the "X") */
+    .menu-toggle.is-active .bar {
+      background-color: var(--toggle-stroke-color-active);
+    }
+
+    /* Mathematically align and cross the lines at the absolute center */
+    .menu-toggle.is-active .bar:nth-child(1) {
+      transform: translateY(calc(var(--toggle-stroke-height) + var(--toggle-stroke-gap))) rotate(45deg);
+    }
+
+    .menu-toggle.is-active .bar:nth-child(2) {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .menu-toggle.is-active .bar:nth-child(3) {
+      transform: translateY(calc(-1 * (var(--toggle-stroke-height) + var(--toggle-stroke-gap)))) rotate(-45deg);
+    }
+
+
+    /* =============================================
+       HERO SECTION — Premium dark immersive design
+    ============================================= */
+    .hero-section {
+      min-height: 100vh;
+      max-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--purple);
+      position: relative;
+      overflow: hidden;
+      padding-top: 0;
+    }
+
+    /* Grid overlay */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Vignette and bottom blend overlay */
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /*background:
+        linear-gradient(to bottom, transparent 60%, var(--white) 100%),
+        radial-gradient(ellipse at center, transparent 40%, rgba(60, 40, 140, 0.5) 100%);
+      pointer-events: none;
+      z-index: 2;*/
+    }
+
+    .hero-content {
+      text-align: center;
+      position: relative;
+      z-index: 3;
+      padding: 2rem 1.5rem;
+      max-width: 900px;
+    }
+
+    /* Small label above the title */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: lowercase;
+      color: var(--sec-purple);
+      margin-bottom: 1.5rem;
+      opacity: 0.4
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--sec-purple);
+      opacity: 0.6;
+    }
+
+    .hero-title {
+      font-family: 'righteous';
+      font-size: clamp(3rem, 6vw, 9rem);
+      line-height: 0.9;
+      color: #ffffff;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+      position: relative;
+      flex-wrap: nowrap;
+
+    }
+
+    /* "Everybody Can Be" subtitle */
+    .hero-title .hero-subtitle-words {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      letter-spacing: 6px;
+      font-size: 0.22em;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title .colour-word {
+      color: #ffffff;
+      display: inline;
+      white-space: nowrap;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 3rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 15px;
+      text-decoration: none;
+      cursor: none;
+      transition: all 0.25s ease;
+      background: var(--lemon);
+      color: var(--black);
+      border: 15px solid var(--lemon);
+    }
+
+    .hero-btn-primary:hover {
+      background: var(--pink);
+      border-color: var(--pink);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(253, 137, 255, 0.3);
+    }
+
+    .hero-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 15px;
+      text-decoration: none;
+      cursor: none;
+      transition: all 0.25s ease;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    /* Scroll indicator */
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+
+    .hero-scroll-hint svg {
+      width: 20px;
+      opacity: 0.4;
+    }
+
+    @keyframes scrollBounce {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(6px);
+      }
+    }
+
+    /* Inline-block character O replacement in BLOCKH3AD */
+    .hero-o-wrapper {
+      display: inline-block;
+      position: relative;
+      width: 0.82em;
+      height: 0.82em;
+      vertical-align: middle;
+      margin: 0 -0.05em 0.1em;
+      overflow: visible;
+    }
+
+    .hero-o-wrapper img {
+      width: 100%;
+      height: 100%;
+      scale: calc(140%) !important;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease;
+      filter: drop-shadow(0 4px 10px rgba(25, 6, 68, 0.877));
+    }
+
+    .hero-o-wrapper:hover img {
+      transform: scale(1.2) rotate(-8deg);
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+    }
+
+    /* Hero mobile */
+    @media (max-width: 768px) {
+      .hero-section {
+        min-height: 100svh;
+      }
+
+      .hero-eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+      }
+
+      .hero-tagline {
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+      }
+
+      .hero-btn-primary,
+      .hero-btn-secondary {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
+    }
+
+    /* =============================================
+       REUSABLE BUTTON STYLES
+       .btn          = base style shared by all buttons
+       .btn-dark     = black background (primary action)
+       .btn-pink     = pink background (secondary action)
+    ============================================= */
+    .btn {
+      padding: 1rem 1.3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      border-radius: 5px;
+      cursor: none;
+      transition: transform 0.1s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      transform: translate(-2px, -2px);
+    }
+
+    .btn:active {
+      transform: translate(2px, 2px);
+    }
+
+    .btn-dark {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .btn-pink {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    /* =============================================
+       SCROLLING MARQUEE BANNER
+       The black strip with scrolling text between sections.
+    ============================================= */
+    /* =============================================
+       SCROLLING MARQUEE BANNER
+       Sits between the hero (yellow) and about
+       (purple) sections. The text uses mix-blend-mode
+       so where it overlaps the yellow hero above it
+       reads as dark, and where it overlaps the purple
+       section below it reads as light — automatically.
+    ============================================= */
+    .marquee-banner {
+      /*
+        Sits between the hero and about sections, overlapping both equally.
+      */
+      height: 3rem;
+      margin-top: -1.5rem;
+      margin-bottom: -2.5rem;
+      padding-bottom: 1.5rem;
+      position: relative;
+      z-index: 10;
+      pointer-events: none;
+      overflow: hidden;
+      /* Pull the banner up so it visually centers between hero & about */
+      transform: translateY(-2rem);
+      /* Apply mix-blend-mode to the banner itself so it blends with the page behind it
+      mix-blend-mode: none*/
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scrollLeft 40s linear infinite;
+    }
+
+    .marquee-item {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      line-height: 1.2;
+      color: rgba(56, 7, 104, 0.6);
+      text-transform: uppercase;
+      transform: translateY(65%);
+      opacity: 0.5;
+    }
+
+    .marquee-item .star-dot {
+      color: var(--lemon);
+      margin: 0 1.5rem;
+      opacity: 0.2;
+    }
+
+    @keyframes scrollLeft {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* =============================================
+       REUSABLE SECTION WRAPPER
+       Centred container for section content.
+    ============================================= */
+    .section-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Black Han Sans', cursive;
+      font-size: clamp(3rem, 6vw, 5rem);
+      text-align: center;
+      margin-bottom: 4rem;
+      color: var(--black);
+    }
+
+    /* =============================================
+       ABOUT SECTION
+    ============================================= */
+    .about-section {
+      background: var(--white);
+      padding: 16rem 4rem 14rem;
+      position: relative;
+      overflow: visible;
+      /* lets marquee extend upward into hero */
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10rem;
+      align-items: center;
+    }
+
+    /* Left side: the bouncing character image */
+    .about-image-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .character-frame {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .character-circle img {
+      width: 200%;
+      height: auto;
+      margin-left: -180px;
+      object-fit: contain;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-16px);
+      }
+    }
+
+    /* Right side: the text content */
+    .about-text-column .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .about-text-column h2 {
+      font-family: 'Space Grotesk';
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 1.8rem;
+      color: var(--black);
+    }
+
+    .about-text-column p {
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--black);
+      margin-bottom: 1rem;
+    }
+
+    /* Stats row (100k+ followers, etc.) */
+    .stats-row {
+      display: flex;
+      gap: 6rem;
+      margin-top: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Righteous';
+      font-size: 2.5rem;
+      color: var(--purple);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(10, 4, 16, 0.6);
+    }
+
+    /* =============================================
+       VIDEOS SECTION
+    ============================================= */
+    .videos-section {
+      background: rgb(255, 255, 255);
+      padding: 8rem 3rem;
+      /*border-top: 4px solid var(--black);*/
+      /*border-bottom: 4px solid var(--black);*/
+    }
+
+    .videos-section .section-title {
+      color: var(--sec-purple);
+      font-size: 2.3rem;
+      letter-spacing: 2px;
+      text-align: left;
+      font-family: 'space grotesk'
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Each card is just the video — no title bar below */
+    .video-card {
+      /*border: 3px solid var(--black); */
+      border-radius: 16px;
+      overflow: hidden;
+      /*box-shadow: 5px 5px 0 var(--black);*/
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: none;
+      aspect-ratio: 9 / 15;
+      /* portrait video shape */
+      position: relative;
+      background: var(--black);
+    }
+
+    .video-card:hover {
+      transform: translate(-3px, -3px);
+    }
+
+    .video-link-wrapper {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .local-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.9);
+      opacity: 0.7;
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+      /* Let clicks pass through */
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .video-link-wrapper:hover .play-overlay {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    /* Placeholder thumbnail cards (cards 2 & 3) */
+    .video-thumbnail {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .thumbnail-gradient-2 {
+      background: linear-gradient(135deg, #A855F7, #4ECDC4);
+    }
+
+    .thumbnail-gradient-3 {
+      background: linear-gradient(135deg, #FFE135, #FF4757);
+    }
+
+    .thumbnail-overlay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .thumbnail-emoji {
+      font-size: 6rem;
+      animation: thumbWiggle 2s ease-in-out infinite;
+    }
+
+    .video-card:nth-child(2) .thumbnail-emoji {
+      animation-delay: 0.6s;
+    }
+
+    .video-card:nth-child(3) .thumbnail-emoji {
+      animation-delay: 1.2s;
+    }
+
+    @keyframes thumbWiggle {
+
+      0%,
+      100% {
+        transform: rotate(-8deg);
+      }
+
+      50% {
+        transform: rotate(8deg);
+      }
+    }
+
+    /* The video title overlay sits at the bottom of the card */
+    .video-title-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1rem 1rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+      color: var(--white);
+    }
+
+    .video-title-overlay h3 {
+      font-family: 'Black Han Sans', cursive;
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+      color: var(--yellow);
+    }
+
+    .video-title-overlay p {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .play-button {
+      width: 52px;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      border: 3px solid var(--black);
+    }
+
+    /* =============================================
+       VIDEO CARD — TIKTOK-STYLE OVERLAY BUTTONS
+       NOTE: TikTok's public API does not expose
+       like/comment/share counts without an approved
+       developer account — so stats below are manually
+       set. Update them from your TikTok Analytics.
+    ============================================= */
+
+    /* Right-side action panel (like / comment / share) */
+    .video-actions {
+      position: absolute;
+      right: 8px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      z-index: 10;
+      pointer-events: none;
+      /* panel itself is transparent to clicks */
+    }
+
+    .video-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      pointer-events: all;
+      cursor: none;
+      background: none;
+      border: none;
+      padding: 0;
+      text-decoration: none;
+    }
+
+
+    /* SVG icon inside each action circle */
+    .action-icon {
+      width: 40px;
+      height: auto;
+      display: block;
+      fill: rgb(255, 255, 255)
+    }
+
+    .video-action-btn:hover .icon-circle {
+      background: rgba(255, 141, 179, 0.55);
+      transform: scale(1.12);
+    }
+
+    .video-action-btn .action-count {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Bottom control bar (play / mute / fullscreen) */
+    .video-controls {
+      position: absolute;
+      bottom: 12px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .video-controls-left {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255, 255, 255, 0.0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    /* SVG icon inside each control button */
+    .ctrl-icon {
+      width: 40px;
+      height: auto;
+      display: block;
+    }
+
+    .ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: scale(1.1);
+    }
+
+    /* =============================================
+       THE BLOCK LIST — COLLABS SECTION
+    ============================================= */
+    .collabs-section {
+      background: var(--purple);
+      padding: 8rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle radial glow behind the section */
+    .collabs-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(198, 255, 0, 0.08) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .collabs-section .section-title {
+      color: var(--lemon);
+      font-family: 'Righteous', cursive;
+      font-size: 1.7rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .collabs-subtitle {
+      color: rgba(255, 255, 255, 0.5);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .8em;
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      max-width: 90px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes badgeFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glowPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 12px rgba(198, 255, 0, 0.15), inset 0 0 12px rgba(198, 255, 0, 0.05);
+      }
+
+      50% {
+        box-shadow: 0 0 24px rgba(198, 255, 0, 0.3), inset 0 0 18px rgba(198, 255, 0, 0.1);
+      }
+    }
+
+    .brand-badge {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      border: 1.5px solid rgba(198, 255, 0, 0.25);
+      border-radius: 8px;
+      padding: 1rem 2.4rem;
+      font-family: 'Black Han Sans', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      text-transform: titlecase;
+      color: var(--white);
+      cursor: none;
+      transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      animation: badgeFadeUp 0.6s ease-out both, glowPulse ease-in-out infinite;
+    }
+
+    .brand-badge:nth-child(1) {
+      animation-delay: 0s, 0s;
+    }
+
+    .brand-badge:nth-child(2) {
+      animation-delay: 0.12s, 0.12s;
+    }
+
+    .brand-badge:nth-child(3) {
+      animation-delay: 0.24s, 0.24s;
+    }
+
+    .brand-badge:nth-child(4) {
+      animation-delay: 0.36s, 0.36s;
+    }
+
+    .brand-badge:nth-child(5) {
+      animation-delay: 0.48s, 0.48s;
+    }
+
+    .brand-badge:hover {
+      background: var(--lemon);
+      border-color: var(--lemon);
+      color: var(--black);
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow: 0 0 30px rgba(198, 255, 0, 0.5);
+      animation: none;
+    }
+
+    /* =============================================
+       MERCH / SHOP SECTION
+    ============================================= */
+    .merch-section {
+      background: var(--pink);
+      padding: 4rem 4rem;
+      /*border-top: 4px solid var(--black);*/
+      /*border-bottom: 4px solid var(--black);*/
+    }
+
+    .merch-section .section-title {
+      color: var(--sec-purple);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.3rem;
+      letter-spacing: 2px;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    /* 2 items — evenly spaced and centered */
+    .merch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 800px;
+      margin: 60px auto;
+    }
+
+    .merch-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--white);
+      /*border: 3px solid var(--black);*/
+      border-radius: 15px;
+      overflow: hidden;
+      /*box-shadow: 4px 4px 0 var(--sec-purple);*/
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: none;
+    }
+
+    .merch-card:hover {
+      transform: translate(-2px, -4px) rotate(-1deg);
+
+      /*box-shadow: 6px 8px 0 var(--black);*/
+    }
+
+    /* The image/emoji area of each product card */
+    .merch-image-area {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      /*border-bottom: 3px solid var(--black);*/
+      overflow: hidden;
+    }
+
+    .merch-image-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.3);
+      transition: transform 0.3s ease;
+    }
+
+    .merch-card:hover .merch-image-area img {
+      transform: scale(1.38);
+    }
+
+    /* Each product card gets a different tinted background */
+    .merch-bg-pink {
+      background: #FF6B9D22;
+    }
+
+    .merch-bg-teal {
+      background: #4ECDC422;
+    }
+
+    .merch-bg-yellow {
+      background: #FFE13544;
+    }
+
+    .merch-bg-purple {
+      background: #A855F722;
+    }
+
+    .merch-product-info {
+      padding: 0.9rem 1rem;
+    }
+
+    .merch-product-info h4 {
+      font-family: 'arial', bold, sans-serif;
+      font-size: 1.1rem;
+      color: var(--black);
+      margin-bottom: 0.2rem;
+    }
+
+    /* Small pill label showing the product type e.g. "Facecap" */
+    .merch-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 5px;
+      padding: 0.15rem 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .merch-product-info p {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--pink);
+    }
+
+    /* =============================================
+       WORK WITH US — consolidated section
+       (services grid on top, CTA row below)
+    ============================================= */
+    .work-with-us-section {
+      background: #ffffff;
+      /* Premium pure white */
+      padding: 8rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-with-us-section::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(100, 85, 231, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .work-with-us-section::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      right: -10%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(0, 255, 142, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .work-title {
+      color: var(--sec-purple);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .work-intro {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: rgba(10, 4, 16, 0.6);
+      max-width: 600px;
+      margin: 0 auto 5rem;
+      line-height: 1.6;
+    }
+
+    /* 3-column services grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto 6rem;
+    }
+
+    .service-card {
+      background: #f4f4f4;
+      border: 1px solid rgba(9, 0, 47, 0.06);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 250px;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .service-card:nth-child(even) {
+      background: #e8e8e8;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(100, 85, 231, 0.03) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(100, 85, 231, 0.25);
+      background: rgba(9, 0, 47, 0.04);
+      box-shadow: 0 15px 30px rgba(9, 0, 47, 0.05);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon-wrapper {
+      width: 60px;
+      height: 60px;
+      background: rgba(9, 0, 47, 0.04);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(9, 0, 47, 0.03);
+    }
+
+    .service-card:hover .service-icon-wrapper {
+      background: rgba(100, 85, 231, 0.08);
+      border-color: rgba(100, 85, 231, 0.15);
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--sec-purple);
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.2px;
+    }
+
+    .service-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(10, 4, 16, 0.65);
+      flex-grow: 1;
+    }
+
+    /* Clean Minimalist CTA Card */
+    .work-cta-card {
+      max-width: 850px;
+      margin: 0 auto;
+      background: var(--purple);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(9, 0, 47, 0.15);
+    }
+
+    .work-cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(253, 137, 255, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .work-cta-card .section-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .work-cta-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .work-cta-card .cta-desc {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    .cta-button-group {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-btn {
+      padding: 0.8rem 1.6rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 2px solid transparent;
+      cursor: none;
+    }
+
+    .cta-btn-primary {
+      background: var(--lemon);
+      color: var(--black);
+      border-color: var(--lemon);
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--pink);
+      border-color: var(--pink);
+      color: var(--black);
+      transform: translateY(-2px);
+    }
+
+    .cta-btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .cta-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--white);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* Mobile Consolidated Rules */
+    @media (max-width: 768px) {
+
+      /* Navigation Menu Drawer & Hamburger Toggle */
+      .menu-toggle {
+        display: flex !important;
+      }
+
+
+      .navbar {
+        padding: 0.8rem 1.5rem;
+        background: transparent;
+      }
+
+      .navbar-logo img {
+        height: clamp(45px, 8vw, 60px);
+      }
+
+      .navbar-links {
+        position: fixed;
+        top: 0;
+        right: -120%;
+        width: 100%;
+        height: 100vh;
+        background: var(--purple);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem;
+        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 100;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+        border-radius: 10px 0 0 10px;
+      }
+
+      .navbar-links.is-active {
+        right: 0;
+      }
+
+      .navbar-links a {
+        font-size: 1.6rem;
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+        color: var(--white);
+        font-weight: 700;
+        background: transparent;
+      }
+
+      .navbar-links a:hover {
+        background: var(--bright-yellow);
+        color: var(--black);
+      }
+
+      /* Hero Section Spacing */
+      .hero-section {
+        min-height: 80vh;
+        padding-top: 6rem;
+      }
+
+      .hero-buttons {
+        gap: 1.2rem;
+      }
+
+      .btn {
+        font-size: 1.1rem;
+        padding: 0.8rem 1.2rem;
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+
+      /* About Section & Stats Wrapping */
+      .about-section {
+        padding: 10rem 1.5rem 8rem;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        position: relative;
+        min-height: unset;
+      }
+
+      .about-image-column {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 0;
+        pointer-events: none;
+        margin-bottom: 1.5rem;
+      }
+
+      .about-text-column {
+        position: relative;
+        z-index: 1;
+      }
+
+      .character-frame {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: unset;
+      }
+
+      .character-circle img {
+        width: 100%;
+        height: auto;
+        margin-left: 0;
+        object-fit: contain;
+      }
+
+      .stats-row {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .stat-item {
+        flex: 1 1 90px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
+
+      /* Video Section Centering */
+      .videos-section {
+        padding: 5rem 1.5rem;
+      }
+
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        justify-items: center;
+      }
+
+      .video-card {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .video-actions {
+        gap: 12px;
+        bottom: 70px;
+        right: 4px;
+      }
+
+      .action-icon {
+        width: 28px;
+      }
+
+      .video-action-btn .action-count {
+        font-size: 0.7rem;
+      }
+
+      .ctrl-btn {
+        width: 34px;
+        height: 34px;
+      }
+
+      .ctrl-icon {
+        width: 26px;
+      }
+
+      /* Brand Collabs Badge Row */
+      .collabs-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .brand-logo-row {
+        gap: 1.2rem;
+      }
+
+      .brand-badge {
+        font-size: 1.1rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      /* Shop Section Header & Card Scaling */
+      .merch-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .merch-section>.section-wrapper>div[style*="display: flex"] {
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 1rem !important;
+      }
+
+      .merch-section .section-title {
+        font-size: 1.5rem !important;
+        white-space: nowrap;
+      }
+
+      .merch-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        justify-items: center;
+        margin: 30px auto;
+      }
+
+      .merch-card {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .merch-product-info h4 {
+        font-size: 0.85rem;
+      }
+
+      .merch-product-info p {
+        font-size: 0.85rem;
+      }
+
+      .merch-tag {
+        font-size: 0.55rem;
+        padding: 0.1rem 0.4rem;
+      }
+
+      /* Rebranded Work With Us Section - Mobile */
+      .work-with-us-section {
+        padding: 5rem 1.5rem;
+      }
+
+      .work-title {
+        font-size: 2.2rem;
+      }
+
+      .work-intro {
+        font-size: 1rem;
+        margin-bottom: 3rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin-bottom: 4rem;
+      }
+
+      .service-card {
+        padding: 2rem 1.5rem;
+        min-height: auto;
+      }
+
+      .service-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .service-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .service-card p {
+        font-size: 0.9rem;
+      }
+
+      .work-cta-card {
+        padding: 2.5rem 1.5rem;
+        border-radius: 16px;
+      }
+
+      .work-cta-card h3 {
+        font-size: 2rem;
+      }
+
+      .work-cta-card .cta-desc {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .cta-button-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+
+      .cta-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Social Buttons List Layout in Mobile View */
+      .social-section {
+        padding: 4rem 1.5rem;
+      }
+
+      .social-button-row {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .social-btn {
+        font-size: 2.2rem;
+        letter-spacing: -1px;
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+
+    /* =============================================
+       MEET THE TEAM SECTION
+       Not in the navbar — sits between Work With Us
+       and the Follow section.
+    ============================================= */
+    .team-section {
+      background: var(--white);
+      padding: 1rem 7em 5em;
+      padding-bottom: 6rem;
+    }
+
+    .team-section .section-title {
+      color: var(--sec-purple);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1px;
+      text-transform: uppercase;
+      text-align: left;
+      margin-bottom: 0.8rem;
+      opacity: .6;
+    }
+
+    .team-profile {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      /*transform: translateY(var(--scroll-y, 0px));
+     transition: transform 0.1s ease-out;*/
+    }
+
+    .team-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: var(--white);
+      flex-shrink: 0;
+      border: none !important;
+      /* Force GPU compositing for crisp image rendering */
+      will-change: transform;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+
+    .team-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      image-rendering: auto;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+
+    .team-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .team-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--sec-purple);
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .team-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--sec-purple);
+      opacity: 0.85;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    @media (max-width: 768px) {
+      .team-section {
+        padding: 1rem 1.5rem;
+      }
+
+      .team-profile {
+        gap: 0.8rem;
+      }
+
+      .team-avatar {
+        width: 58px;
+        height: 58px;
+      }
+
+      .team-name {
+        font-size: 1.1rem;
+      }
+
+      .team-role {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* =============================================
+       SOCIAL / FOLLOW SECTION
+    ============================================= */
+    .social-section {
+      background: var(--pink);
+      padding: 5rem 3rem;
+      text-align: center;
+      padding-top: 9rem;
+
+    }
+
+    .social-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.6);
+      margin-bottom: 1.5rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .social-button-row {
+      display: flex;
+      gap: 1rem 2rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+
+    }
+
+    .social-btn {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+      line-height: 1;
+      text-decoration: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      cursor: none;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-6px) scale(1.02);
+      opacity: 0.9;
+    }
+
+    .social-btn.tiktok {
+      color: #FFFFFF;
+      text-shadow: 3px 3px 0px #ff0050, -3px -3px 0px #00f2fe;
+    }
+
+    .social-btn.instagram {
+      background: linear-gradient(45deg, #FFDC80, #F56040, #C13584, #833AB4, #5851DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .social-btn.youtube {
+      color: #FF0000;
+    }
+
+    .social-btn.facebook {
+      color: #0026ff;
+      text-shadow: 1.5px 1.5px 3px rgba(255, 255, 255, 0.9);
+    }
+
+    .social-btn.snapchat {
+      color: #FFFC00;
+      text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+    }
+
+    .social-btn.X {
+      color: #000000;
+      text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.8);
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .site-footer {
+      background: var(--pink);
+      color: var(--white);
+      padding: 4cqw;
+      text-align: center;
+    }
+
+    .site-footer p {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .site-footer .legal-bridge {
+      font-size: 0.7rem;
+      opacity: 0.55;
+      margin-top: 0.6rem;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+
+    /* Mobile styles are now defined at the bottom of the Services/Work section above */
+
+    /* =============================================
+       CHARACTER IMAGE UPLOAD BUTTON
+       Shows in the hero so you can pick a local
+       image — it then appears in both the hero
+       mascot spot and the About section circle.
+    ============================================= */
+    .upload-wrapper {
+      margin-top: 1.5rem;
+    }
+
+    .upload-label {
+      display: inline-block;
+      padding: 0.6rem 1.6rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border: 2px dashed var(--black);
+      border-radius: 50px;
+      cursor: pointer;
+      color: var(--black);
+      background: rgba(0, 0, 0, 0.08);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .upload-label:hover {
+      background: rgba(0, 0, 0, 0.16);
+      border-color: var(--pink);
+      color: var(--pink);
+    }
